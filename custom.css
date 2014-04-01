@@ -2,8 +2,8 @@
 html 					{ overflow-y:scroll; }
 body 					{ padding-top:70px; }
 
-.nbtn {
-	margin-right: 20px;
+.navbar-btn {
+	margin-left: 10px;
 }
 
 .event-listing {  
@@ -16,6 +16,44 @@ body 					{ padding-top:70px; }
 
 .posts-container {
 	margin-top: 30px;
+}
+
+.side-btn {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.side-btn-sm {
+	margin-bottom: 5px;
+}
+
+
+textarea {
+	border:2px solid #ccc;
+	padding: 10px;
+	vertical-align: top;
+	width: 25%;
+}
+
+.animated {
+	-webkit-transition: height 0.2s;
+	-moz-transition: height 0.2s;
+	transition: height 0.2s;
+}
+
+.post {
+	margin-top: 20px;
+}
+.post-side {
+	margin-top: 20px;
+}
+
+.edit-textarea {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 1.428571429;
+	color: #333;
+	background: #FDFDFD; 
+
 }
 
 /*
@@ -44,13 +82,7 @@ body 					{ padding-top:70px; }
 	    margin: 5px 0px; 
 	}  
 
-.side-btn {
-	margin-bottom: 10px;
-	margin-top: 10px;
-}
-.side-btn-sm {
-	margin-bottom: 5px;
-}
+
 
 .edit-textarea {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
