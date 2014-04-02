@@ -51,19 +51,24 @@ Server commands history:
 4. install meteor
 	curl https://install.meteor.com | /bin/sh
 	npm install -g meteorite
-	git clone https://github.com/SachaG/Telescope.git), for example in /home/meteor.
+	git clone https://github.com/hungrycat/liveblog.git, for example in /home/meteor.
 	cd mymeteorapp 
 	meteor bundle bundle.tgz 
 	tar -zxvf bundle.tgz 
 
 4. set env variables. http://projectricochet.com/blog/rolling-your-own-meteor-js-environment
-export MONGO_URL=mongodb://localhost:27017/liveblog;
-export ROOT_URL=https://www.readitlive.net;
-export PORT=3000
+	export MONGO_URL=mongodb://localhost:27017/liveblog;
+	export ROOT_URL=https://readitlive.net;
+	export PORT=3000
 
-node main.js
+	replaced etc/environment with these, may not be a good idea
 
 5. set up forever module https://github.com/nodejitsu/forever
+	still needed to enter export ROOT_URL=https://readitlive.net;
+
+	forever main.js
+
+
 
 
 

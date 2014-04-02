@@ -1,18 +1,29 @@
 Accounts.ui.config({ passwordSignupFields: 'USERNAME_ONLY' });
 
+// autopublish package is not installed!
+Router.configure({
+  waitOn: function () {
+    return Meteor.subscribe('events');
+  }
+});
+
+
 Router.map( function () {
 	this.route('main', {
 		path: '/'
 	});
 	this.route('eventsList', {
 		path: '/eventsList',
-		waitOn: function () { return Meteor.subscribe('events')},
+		template: 'eventsList',
 		data: function () { return Events.find({}) }
 	});
 	this.route('eventLive', {
 		path: '/event/:event_id', 
-		waitOn: function () { return Meteor.subscribe('posts', this.params.eventId)},
-		data: function() { return Events.findOne(this.params.event_id); }
+		template: 'eventLive',
+		waitOn: function () { return Meteor.subscribe('posts', this.params.eventId);},
+		data: function() { 
+			console.log("event " + Events.findOne(this.params.event_id) + " because eventid: " + this.params.event_id);
+			return Events.findOne(this.params.event_id); }
 	});
 });
 
@@ -161,7 +172,7 @@ Template.eventLive.events({
 	   },
 
 	 'click #liveDead' : function () {
-
+	 	console.log("_id: " + _id + " this._id " + this._id);
 		Meteor.call("liveDead", this._id);
 
 	   }, 
@@ -196,13 +207,13 @@ Template.eventLive.events(okCancelEvents(
 }));
 
 
-Template.eventLive.rendered = function () {
-	//autoresize the new post and edit post textarea
-	$(".animated").autosize({append: "\n"});
-	$(".animated").trigger('autosize.resize');
+// Template.eventLive.rendered = function () {
+// 	//autoresize the new post and edit post textarea
+// 	$(".animated").autosize({append: "\n"});
+// 	$(".animated").trigger('autosize.resize');
 
 
-};
+// };
 
 
 

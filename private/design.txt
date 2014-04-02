@@ -12,8 +12,8 @@ todo's:
 		+set it up to use multiple cpu cores
 
 		+redirect live.readitlive.net
-		+save json of posts to this second server
-		+make embed event url point to the right place
+	-save json of posts to this second server
+	-make embed event url point to the right place
 
 
 

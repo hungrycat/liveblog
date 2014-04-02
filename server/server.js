@@ -7,7 +7,9 @@ Meteor.methods({
 		Posts.remove(postId);
 	}, 
 	liveDead: function(eventId) {
-		var doc = Events.findOne({_id: eventId})
+		
+		var doc = Events.findOne({_id: eventId});
+		console.log("eventid: " + eventId + " doc " + doc);
 		Events.update({_id: eventId}, {$set: {eventIsLive: !doc.eventIsLive}});
 	}
 
