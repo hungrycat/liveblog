@@ -7,7 +7,7 @@ When your application starts up, Mongoose automatically calls ensureIndex for ea
 
 
 
-
+	 
 #####----------------------------##########
 
 ssh root@107.170.215.52
@@ -22,9 +22,19 @@ ssh root@107.170.215.52
 Server commands history:
 1. install nginx
 	https://www.digitalocean.com/community/articles/how-to-install-nginx-on-ubuntu-12-04-lts-precise-pangolin
-	sudo apt-get install nginx
+
+	http://www.meteorpedia.com/read/nginx
+
+	sudo add-apt-repository ppa:nginx/stable
+	sudo apt-get update
+	sudo aptitude -y install nginx
+
+
 	sudo service nginx start
 	update-rc.d nginx defaults
+	nginx config
+		+ nginx.conf
+		+ sites available enables
 2. install node
 	https://www.digitalocean.com/community/articles/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 	curl https://raw.github.com/creationix/nvm/master/install.sh | sh
@@ -33,8 +43,30 @@ Server commands history:
 	nvm install 0.10.26
 	n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
 
+3. install mongodb
+	sudo apt-get install mongodb
+	mkdir /data
+	mkdir /data/db
 
-next: https://www.digitalocean.com/community/articles/how-to-setup-a-node-js-development-environment-on-a-vps-for-a-team
+4. install meteor
+	curl https://install.meteor.com | /bin/sh
+	npm install -g meteorite
+	git clone https://github.com/SachaG/Telescope.git), for example in /home/meteor.
+	cd mymeteorapp 
+	meteor bundle bundle.tgz 
+	tar -zxvf bundle.tgz 
+
+4. set env variables. http://projectricochet.com/blog/rolling-your-own-meteor-js-environment
+export MONGO_URL=mongodb://localhost:27017/liveblog;
+export ROOT_URL=https://www.readitlive.net;
+export PORT=3000
+
+node main.js
+
+5. set up forever module https://github.com/nodejitsu/forever
+
+
+
 
 //install imagemagik for image resizing featuers
 sudo apt-get update

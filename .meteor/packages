@@ -4,12 +4,10 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-autopublish
+
 insecure
 accounts-password
 accounts-ui-bootstrap-3
 bootstrap-3
 iron-router
 jquery
-x-editable-bootstrap3
-cloudinary

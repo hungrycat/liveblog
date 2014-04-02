@@ -1,8 +1,6 @@
 {
   "packages": {
     "accounts-ui-bootstrap-3": {},
-    "bootstrap-3": {},
-    "x-editable-bootstrap3": {},
-    "cloudinary": {}
+    "bootstrap-3": {}
   }
 }

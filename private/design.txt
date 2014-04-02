@@ -1,15 +1,21 @@
 ###------------------
 todo's:
-	-events listing page
-		+ should not retrieve the posts or comments
-	-event live page
-	
 
-	-user accounts
-		+manage users
-		+username goes on posts
-	-avatars for users
 	-upload images in a post (add image button)
+		+ https://atmospherejs.com/package/s3-Images
+	-avatars for users
+
+		
+
+	-set up second server
+		+set up express and sockets.io to stream data
+		+set it up to use multiple cpu cores
+
+		+redirect live.readitlive.net
+		+save json of posts to this second server
+		+make embed event url point to the right place
+
+
 
 	-Watch event page
 		+view events
@@ -23,33 +29,20 @@ todo's:
 	-edit event title
 
 
-	-set up server
-		+upgrade to express 4.0? http://scotch.io/bar-talk/expressjs-4-0-new-features-and-upgrading-from-3-0
-		+make embed event url point to the right place
-	-domain name - readitlive.net or .org
+
 
 	-number of users online, max users for event, etc
 
-	-rather than fetching data, live event page should be getting a stream of posts and comments
-		+but should load images in the stream only once
-	-offload posts to something with less overhead, maybe a json on a different server instance - or two with a load balancer in front
 
 Nice to have:
-	-change new post to use the xeditable thing, it looks much better. 
-	-hide the delete button when editing posts: http://vitalets.github.io/angular-xeditable/#text-btn
 	-event live/not live changes button color
 	-use nicer looking confirm dialouge 
+	-confirm when deleting things
 
 
 
 ###------------------
 design doc for the livebloging platform
-
-Backend - REST API only
-	Events
-		contains posts
-		contains comments
-	Every time the posts are updated a new json file is put on s3
 
 
 
@@ -58,36 +51,6 @@ Backend - REST API only
 			every 30 seconds or so? or every time a new post is made?
 		check a "status.json" file to see if the event is live. If it is:
 			check recent.json every 3 seconds or so. This contains the ~50 most recent posts. 
-
-
-
-
-
-Front:
-One SPA with two views? or two SPA's?: the admin pages, and the view page. 
-
-
-admin/
-	Shows list of events in chronological order
-	button to create new event
-	link to get embed code for each
-	link to admin page for each
-
-admin/event/[eventid]
-	admin page has the blog, 
-	and below it a place to make an entry. 
-		Possibly post now/queue setup
-	On the right side is a list of user comments.
-		You can edit the comments and post them. 
-		you can click on a user and it will block them. 
-	see number of users online (express guide has an example)
-	
-
-View /event/[eventid]
-	page has just the posts, and a box at the bottom for username and comments. 
-	will need some design about logging in, etc. 
-	It should be embedded as an i-frame linking to the /event/eventid
-	<iframe id="BlyveEvent" width="550" height="900" frameborder="0" src="http://blyve.com/embed/467835525a9b6c0a76070000"></iframe>
 
 
 

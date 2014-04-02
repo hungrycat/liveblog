@@ -5,10 +5,13 @@ Router.map( function () {
 		path: '/'
 	});
 	this.route('eventsList', {
-		path: '/eventsList'
+		path: '/eventsList',
+		waitOn: function () { return Meteor.subscribe('events')},
+		data: function () { return Events.find({}) }
 	});
 	this.route('eventLive', {
 		path: '/event/:event_id', 
+		waitOn: function () { return Meteor.subscribe('posts', this.params.eventId)},
 		data: function() { return Events.findOne(this.params.event_id); }
 	});
 });
@@ -16,6 +19,18 @@ Router.map( function () {
 //when editing a post, set id of the post
 Session.setDefault('editing_postname', null);
 
+
+Template.main.helpers({
+	EventsListPageRedirect: function () {
+		Router.go('/eventsList');
+	}
+
+
+});
+
+//--------------------------------------------
+//-------      list of events   --------------
+//--------------------------------------------
 
 Template.eventsList.helpers({
 	listEvents: function () {
@@ -163,8 +178,8 @@ Template.eventLive.events({
 
 	    Deps.flush(); // force DOM redraw, so we can focus the edit field
 	    activateInput(tmpl.find("#editPostText"));
-	    	$(".animated").autosize({append: "\n"});
-	$(".animated").trigger('autosize.resize');
+	    $(".animated").autosize({append: "\n"});
+		$(".animated").trigger('autosize.resize');
 	  }
 });
 

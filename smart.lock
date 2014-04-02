@@ -3,9 +3,7 @@
   "dependencies": {
     "basePackages": {
       "accounts-ui-bootstrap-3": {},
-      "bootstrap-3": {},
-      "x-editable-bootstrap3": {},
-      "cloudinary": {}
+      "bootstrap-3": {}
     },
     "packages": {
       "accounts-ui-bootstrap-3": {
@@ -17,16 +15,6 @@
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
         "tag": "v3.1.1-1",
         "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
-      },
-      "x-editable-bootstrap3": {
-        "git": "https://github.com/JustinSGray/meteor-x-editable-bootstrap.git",
-        "tag": "v1.5.2",
-        "commit": "1e5e6d7bddf0b17cc6ea2fc1f50c3f9fd2cfc3f3"
-      },
-      "cloudinary": {
-        "git": "https://github.com/Lepozepo/cloudinary.git",
-        "tag": "v1.0.2",
-        "commit": "037bd59917c2d59a22761e64b5d4cf0cfe58c519"
       }
     }
   }

@@ -12,3 +12,12 @@ Meteor.methods({
 	}
 
 });
+
+
+Meteor.publish('posts', function(eventId) {
+  return Posts.find({ eventId: eventId});
+});
+
+Meteor.publish('events', function() {
+  return Events.find({});
+});
