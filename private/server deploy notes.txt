@@ -51,8 +51,11 @@ Server commands history:
 4. install meteor
 	curl https://install.meteor.com | /bin/sh
 	npm install -g meteorite
-	git clone https://github.com/hungrycat/liveblog.git, for example in /home/meteor.
-	cd mymeteorapp 
+	cd /home/meteor
+	rm -rf liveblog
+	git clone https://github.com/hungrycat/liveblog.git
+	cd liveblog
+	mrt
 	meteor bundle bundle.tgz 
 	tar -zxvf bundle.tgz 
 

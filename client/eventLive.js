@@ -3,6 +3,7 @@
 //--------------------------------------------
 
 
+
 ////////// Helpers for in-place editing //////////
 
 // Returns an event map that handles the "escape" and "return" keys and
@@ -50,15 +51,15 @@ Template.eventLive.helpers({
 		var calcTimeAgo = function (t) {		
 			var str = "";
 			var diff = ( Date.now() - t )/1000;
-			var days = diff / ( 60*60*24) ;
-			if (days === 1 ) {return "1 day";}
-			else if (days >=1 ) { return parseInt(days) + " days";}
-			var hours = diff / (60*60);
-			if (hours === 1 ) {return "1 hour";}
-			else if (hours >=1 ) { return parseInt(hours) + " hours";}
-			var mins = diff / (60);
-			if (mins === 1 ) {return "1 minute";}
-			else if (mins >=1 ) { return parseInt(mins) + " minutes";}
+			var days = parseInt(diff / ( 60*60*24)) ;
+			if (days > 1 ) { return days + " days";}
+			else if (days === 1 ) {return "1 day";} 
+			var hours = parseInt(diff / (60*60));
+			if (hours > 1 ) { return hours + " hours";}
+			else if (hours === 1 ) {return "1 hour";} 
+			var mins = parseInt(diff / (60));
+			if (mins > 1 ) { return mins + " minutes";}
+			else if (mins === 1 ) {return "1 minute";} 
 			else { return "moments"; }
 
 		};
@@ -72,6 +73,137 @@ Template.eventLive.helpers({
 });
 
 Template.eventLive.events({
+			'change input[type=file]': function (e) {
+			var files = e.currentTarget.files;
+			_.each(files,function(file){
+				var reader = new FileReader;
+				var fileData = {
+					name:file.name,
+					size:file.size,
+					type:file.type
+				};
+
+			var imageData = 'No data';
+
+			var callback = "postImage";
+
+				//Setting uploading to true.
+
+				Session.set('uploading', true);
+
+
+				if (!file.type.match(/image.*/)) {
+					Session.set('uploading', false);
+				}
+				else{
+					//IMAGE CANVAS
+
+					var img = document.createElement("img");
+
+					reader.onload = function (e) {
+						//CANVAS
+						img.src = e.target.result;
+						var canvas = document.createElement('canvas');
+						var ctx = canvas.getContext("2d");
+
+
+
+
+
+						ctx.drawImage(img, 0, 0);
+
+						var MAX_WIDTH = 700;
+						var MAX_HEIGHT = 900;
+						var width = img.width;
+						var height = img.height;
+						 
+						if (width > height) {
+						  if (width > MAX_WIDTH) {
+						    height *= MAX_WIDTH / width;
+						    width = MAX_WIDTH;
+						  }
+						} else {
+						  if (height > MAX_HEIGHT) {
+						    width *= MAX_HEIGHT / height;
+						    height = MAX_HEIGHT;
+						  }
+						}
+						canvas.width = width;
+						canvas.height = height;
+						var ctx = canvas.getContext("2d");
+
+
+
+
+						
+
+var exif = EXIF.readFromBinaryFile(new BinaryFile(e.target.result));
+console.log("%O", exif);
+switch(exif.Orientation){
+
+	   case 8:
+           ctx.rotate(90*Math.PI/180);
+           break;
+       case 3:
+           ctx.rotate(180*Math.PI/180);
+           break;
+       case 6:
+           ctx.rotate(-90*Math.PI/180);
+           break;
+
+       case 8:
+           ctx.rotate(90*Math.PI/180);
+           break;
+       case 3:
+           ctx.rotate(180*Math.PI/180);
+           break;
+       case 6:
+           ctx.rotate(-90*Math.PI/180);
+           break;
+    }
+    					ctx.drawImage(img, 0, 0, width, height);
+
+						var dataUrl = canvas.toDataURL(fileData.type);
+						var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64')+7,dataUrl.length));
+						var length = binaryImg.length;
+						var ab = new ArrayBuffer(length);
+						var ua = new Uint8Array(ab);
+						for (var i = 0; i < length; i++){
+							ua[i] = binaryImg.charCodeAt(i);
+						}
+
+						//fileData.data = new Uint8Array(reader.result);
+						fileData.data = ua;
+
+
+						Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
+							console.log("uploading complete! url is: " + url);
+							Session.set('S3url', url);
+							Session.set('uploading', false);
+
+							var user = Meteor.user();
+							////now post the image!
+							console.log("%O", {
+					          imageURL: url,
+					          author: user.username,
+					          eventId: Session.get("currentEvent"),
+					          time: Date.now()
+					        });
+
+							Posts.insert({
+					          imageURL: url,
+					          author: user.username,
+					          eventId: Session.get("currentEvent"),
+					          time: Date.now()
+					        });
+
+						});
+					};
+
+					reader.readAsDataURL(file);
+				}
+			});
+		},
 	'click #submitPost' : function (event) {
 		event.preventDefault();
 
@@ -100,6 +232,9 @@ Template.eventLive.events({
 		Meteor.call("liveDead", this._id);
 
 	   }, 
+	 'change .imageInput': function(event, template) {
+	 	
+	 },
 
 
 ////////////events for live editing////////////

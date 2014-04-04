@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chatbuilder</title>
+    <script src="http://chatbuilder.hackreactor.com/ChatBuilder.js"></script>
+  </head>
+  <body>
+
+    <script>
+      delete Chat.display;
+      delete Chat.fetch;
+      delete Chat.send;
+
+      //takes a single chat and displays it with jQuery
+      Chat.display = function(a) {
+        $(".messages").append("<li>" + a + "</li>");
+      };
+
+      //takes nothing a returns an array of chats
+      Chat.fetch = function(func) {
+        $.getJSON("https://api.parse.com/1/classes/chats?order=-createdAt")
+          .done(function (a) {
+            //extract the chat texts from each chat object
+            var arr = a.results;
+            var newArr = [];
+            for (i = 0; i < arr.length; i++) {
+              newArr.push(arr[i].text);
+            }
+
+            //send the array of chats to the passed function
+            func(newArr);
+          })
+      };
+
+
+      //takes a chat string and returns nothing
+      Chat.send = function(str) {
+
+        //make the chat into an object
+        oChat = {
+          //we need the username from the url params
+          text: getParameterByName("username") + ": " + str
+        };
+
+        //stringify it
+        jChat= JSON.stringify(oChat);
+
+        //and send it to the server
+        $.post("https://api.parse.com/1/classes/chats", jChat);
+ 
+      };
+
+      //used to get the username from the url params. Copied from 
+      //http://stackoverflow.com/questions/5073859/jquery-how-to-get-parameters-of-a-url
+      function getParameterByName(name) {
+       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+      }
+
+
+      var fetchedData = [];
+
+
+      function updateChat() {
+        //fetch new chats
+        Chat.fetch(function(a) {
+            fetchedData = a;
+        });
+
+        //clear the existing chats from the screen
+        $(".messages").children().remove();
+
+        //display the new chats
+        for (i = 0; i < fetchedData.length; i ++) {
+          Chat.display(fetchedData[i]);
+        }
+
+        //repeat and refresh the display after 3 seconds
+        setTimeout(updateChat, 3000);
+      }
+
+
+
+      //initial call to get the chat updater going
+      //seems to start faster outside of ready()
+      updateChat();
+
+      $(document).ready(function() {
+
+        //sends the chat 
+        $("button.send").on('click', function(){
+            Chat.send($("#text_input").val());
+            $("#text_input").val("");
+        });
+
+      });
+
+
+    </script>
+
+    <h2>Borken Chat</h2>
+
+    <input class="draft" type="text" id="text_input"/> 
+    <button class="send">Send</button>
+
+    <ul class="messages">
+
+    </ul>
+
+  </body>
+</html>

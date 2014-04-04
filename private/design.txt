@@ -1,11 +1,30 @@
 ###------------------
 todo's:
 
-	-upload images in a post (add image button)
-		+ https://atmospherejs.com/package/s3-Images
+	-control enter vs enter for posting
+	-uploaded images rotation
+		
 	-avatars for users
 
+	-ownership of events
+	-edit event title
+
 		
+
+	-Watch event page
+		+view events
+		+make comments - generates a commenter id number
+		+make a name for yourself 
+		+add an image
+		+see posted comments with blockquote formatting
+
+	-add comments functions back to live event page
+		+edit comments
+		+add comment to stream with blockquote formatting, inline response
+		+ignore commenter
+
+	
+	
 
 	-set up second server
 		+set up express and sockets.io to stream data
@@ -14,19 +33,11 @@ todo's:
 		+redirect live.readitlive.net
 	-save json of posts to this second server
 	-make embed event url point to the right place
+	
 
 
 
-	-Watch event page
-		+view events
-		+make comments - generates a commenter id number
-		+make a name for yourself 
-		+add an image
-		+see posted comments with blockquote formatting
-	-edit comments
-	-add comment to stream with blockquote formatting, inline response
-	-ignore commenter
-	-edit event title
+
 
 
 
@@ -38,6 +49,7 @@ Nice to have:
 	-event live/not live changes button color
 	-use nicer looking confirm dialouge 
 	-confirm when deleting things
+	-tap events
 
 
 

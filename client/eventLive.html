@@ -45,8 +45,8 @@
 
 		</div>
 		<div class="col-xs-3" >
-		<!-- <div ng-controller="MyCtrl"> -->
-<!-- 			<input type="file" name="image" onchange="angular.element(this).scope().uploadFile(this.files)"/> -->
+  			<input type="file">
+
 		</div>
 	</form>
 
@@ -67,13 +67,18 @@
 				<div class="col-xs-10">
 					<div class="post">
 						{{#if editing}}
-						<div class="editPost">
-						  <textarea class='col-xs-12 editPostText animated' id="editPostText">{{ postText }}</textarea>
-						</div>
+							<div class="editPost">
+								<textarea class='col-xs-12 editPostText animated' id="editPostText">{{ postText }}</textarea>
+							</div>
 						{{else}}
-						<div class="displayPost">
-						  <pre class="edit-textarea">{{postText}}</pre>
-						  <p class="post-meta">by <strong>{{ author }}</strong> {{ postTimeString }} ago</p>
+							<div class="displayPost">
+
+							{{ #if imageURL }}
+								<img src="{{imageURL}}" class="img-responsive">
+							{{else}}
+								<pre class="edit-textarea">{{postText}}</pre>
+							{{ /if }}
+						<p class="post-meta">by <strong>{{ author }}</strong> {{ postTimeString }} ago</p>
 						</div>
 						{{/if}}
 

@@ -1,6 +1,6 @@
 Events = new Meteor.Collection('events');
   // eventTitle: eventTitle,
-  // createdBy: user.username,
+  // adminUsers: [ user.username, ]
   // eventIsLive: false,
   // time: Date.now()
 
