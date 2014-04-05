@@ -9,17 +9,26 @@ Meteor.methods({
 	liveDead: function(eventId) {
 		var doc = Events.findOne({_id: eventId});
 		Events.update({_id: eventId}, {$set: {eventIsLive: !doc.eventIsLive}});
+	}, 
+	deleteComment: function(commentId) {
+		Comments.remove(commentId);
 	}
 
 });
 
 
+
+
+Meteor.publish('events', function() {
+  return Events.find({});
+});
+
 Meteor.publish('posts', function(eventId) {
   return Posts.find({ eventId: eventId});
 });
 
-Meteor.publish('events', function() {
-  return Events.find({});
+Meteor.publish('comments', function(eventId) {
+  return Comments.find({ eventId: eventId});
 });
 
 
