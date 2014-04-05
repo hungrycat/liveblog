@@ -3,7 +3,6 @@
 //--------------------------------------------
 
 
-
 ////////// Helpers for in-place editing //////////
 
 // Returns an event map that handles the "escape" and "return" keys and
@@ -39,10 +38,13 @@ var activateInput = function (input) {
 };
 
 
+
+
 Template.eventLive.helpers({
 	listPosts: function () {
 		return Posts.find({eventId: this._id}, { sort: { time: -1 }});
 	}, 
+
 	isLive: function () {
 		return this.eventIsLive ? "Live" : "Ended";
 	}, 
@@ -51,14 +53,14 @@ Template.eventLive.helpers({
 		var calcTimeAgo = function (t) {		
 			var str = "";
 			var diff = ( Date.now() - t )/1000;
-			var days = parseInt(diff / ( 60*60*24)) ;
-			if (days > 1 ) { return days + " days";}
+			var days = diff / ( 60*60*24) ;
+			if (days > 1 ) { return parseInt(days) + " days";}
 			else if (days === 1 ) {return "1 day";} 
-			var hours = parseInt(diff / (60*60));
-			if (hours > 1 ) { return hours + " hours";}
+			var hours = diff / (60*60);
+			if (hours > 1 ) { return parseInt(hours) + " hours";}
 			else if (hours === 1 ) {return "1 hour";} 
-			var mins = parseInt(diff / (60));
-			if (mins > 1 ) { return mins + " minutes";}
+			var mins = diff / (60);
+			if (mins > 1 ) { return parseInt(mins) + " minutes";}
 			else if (mins === 1 ) {return "1 minute";} 
 			else { return "moments"; }
 
@@ -66,14 +68,15 @@ Template.eventLive.helpers({
 		return calcTimeAgo(this.time);
 	}, 
 	editing: function () {
-		return Session.equals('editing_postname', this._id);
+		return Session.equals('editing_post_id', this._id);
 	}
 
 
 });
 
 Template.eventLive.events({
-			'change input[type=file]': function (e) {
+
+		'change input[type=file]': function (e) {
 			var files = e.currentTarget.files;
 			_.each(files,function(file){
 				var reader = new FileReader;
@@ -137,30 +140,30 @@ Template.eventLive.events({
 
 						
 
-var exif = EXIF.readFromBinaryFile(new BinaryFile(e.target.result));
-console.log("%O", exif);
-switch(exif.Orientation){
+// var exif = EXIF.readFromBinaryFile(new BinaryFile(e.target.result));
+// console.log("%O", exif);
+// switch(exif.Orientation){
 
-	   case 8:
-           ctx.rotate(90*Math.PI/180);
-           break;
-       case 3:
-           ctx.rotate(180*Math.PI/180);
-           break;
-       case 6:
-           ctx.rotate(-90*Math.PI/180);
-           break;
+// 	   case 8:
+//            ctx.rotate(90*Math.PI/180);
+//            break;
+//        case 3:
+//            ctx.rotate(180*Math.PI/180);
+//            break;
+//        case 6:
+//            ctx.rotate(-90*Math.PI/180);
+//            break;
 
-       case 8:
-           ctx.rotate(90*Math.PI/180);
-           break;
-       case 3:
-           ctx.rotate(180*Math.PI/180);
-           break;
-       case 6:
-           ctx.rotate(-90*Math.PI/180);
-           break;
-    }
+//        case 8:
+//            ctx.rotate(90*Math.PI/180);
+//            break;
+//        case 3:
+//            ctx.rotate(180*Math.PI/180);
+//            break;
+//        case 6:
+//            ctx.rotate(-90*Math.PI/180);
+//            break;
+//     }
     					ctx.drawImage(img, 0, 0, width, height);
 
 						var dataUrl = canvas.toDataURL(fileData.type);
@@ -183,12 +186,6 @@ switch(exif.Orientation){
 
 							var user = Meteor.user();
 							////now post the image!
-							console.log("%O", {
-					          imageURL: url,
-					          author: user.username,
-					          eventId: Session.get("currentEvent"),
-					          time: Date.now()
-					        });
 
 							Posts.insert({
 					          imageURL: url,
@@ -226,15 +223,25 @@ switch(exif.Orientation){
 	'click .deletePost' : function () {
 		Meteor.call("deletePost", this._id);
 
-	   },
+	},
 
-	 'click #liveDead' : function () {
+	'click #liveDead' : function () {
 		Meteor.call("liveDead", this._id);
 
-	   }, 
-	 'change .imageInput': function(event, template) {
-	 	
-	 },
+	}, 
+
+	'keydown #postText': function (evt) {
+		if (evt.which === 27) { console.log("event 27"); }
+		if (evt.which === 10) { console.log("event 10"); }
+		if (evt.which === 13) { console.log("event 13"); }
+		if (evt.which === 14) { console.log("event 14"); }
+	},
+
+//// comments events
+
+
+
+
 
 
 ////////////events for live editing////////////
@@ -244,13 +251,13 @@ switch(exif.Orientation){
 	    evt.preventDefault();
 	  },
 	  'dblclick .post': function (evt, tmpl) { // start editing list name
-	    Session.set('editing_postname', this._id);
+	    Session.set('editing_post_id', this._id);
 
 	    Deps.flush(); // force DOM redraw, so we can focus the edit field
 	    activateInput(tmpl.find("#editPostText"));
 	    $(".animated").autosize({append: "\n"});
 		$(".animated").trigger('autosize.resize');
-	  }
+	  },
 });
 
 Template.eventLive.events(okCancelEvents(
@@ -258,12 +265,14 @@ Template.eventLive.events(okCancelEvents(
 	{
 	ok: function (postText) {
 	  Posts.update(this._id, {$set: {postText: postText}});
-	  Session.set('editing_postname', null);
+	  Session.set('editing_post_id', null);
 	},
 	cancel: function () {
-	  Session.set('editing_postname', null);
+	  Session.set('editing_post_id', null);
 	}
 }));
+
+
 
 
 Template.eventLive.rendered = function () {

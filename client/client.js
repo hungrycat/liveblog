@@ -4,8 +4,10 @@ Accounts.ui.config({ passwordSignupFields: 'USERNAME_ONLY' });
 
 
 //when editing a post, set id of the post
-Session.setDefault('editing_postname', null);
+Session.setDefault('editing_post_id', null);
 
+
+Session.setDefault('editing_comment_id', null);
 
 Template.main.helpers({
 	EventsListPageRedirect: function () {
@@ -14,4 +16,7 @@ Template.main.helpers({
 
 
 });
+
+
+
 

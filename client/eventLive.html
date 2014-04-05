@@ -45,7 +45,7 @@
 
 		</div>
 		<div class="col-xs-3" >
-  			<input type="file">
+  			<input type="file" class="btn">
 
 		</div>
 	</form>
@@ -76,10 +76,17 @@
 							{{ #if imageURL }}
 								<img src="{{imageURL}}" class="img-responsive">
 							{{else}}
-								<pre class="edit-textarea">{{postText}}</pre>
+								{{ # if postIsComment }}
+									<p>{{ commentator }}: </p>
+									<blockquote>
+										<p>{{ postText }}</p>
+									</blockquote>
+								{{ else }}
+									<pre class="edit-textarea">{{postText}}</pre>
+								{{ /if }}
 							{{ /if }}
-						<p class="post-meta">by <strong>{{ author }}</strong> {{ postTimeString }} ago</p>
-						</div>
+							<p class="post-meta"><strong>{{ author }}</strong> {{ postTimeString }} ago</p>
+							</div>
 						{{/if}}
 
 						
@@ -96,20 +103,7 @@
 
 	<!-- comments  -->
 	<div class="col-md-4 col-md-offset-1">
-		<h2>Comments</h2>
-
-		<!-- loop over the comments -->
-		{{ #each listPosts}}
-			<div class="col-md-9">
-				<blockquote>
-					<p>{{ postText }}</p>
-				</blockquote>
-			</div>
-			<div class="col-md-3">
-				<button type="button" class="btn btn-xs btn-info side-btn-sm">Edit</button>
-				<button type="button" class="btn btn-xs btn-primary side-btn-sm">Post</button>
-			</div>
-		{{ /each }}
+		{{ > comments }}
 	</div>  <!-- /comments -->
 
 </div>
@@ -125,7 +119,7 @@
         <h4 class="modal-title" id="myModalLabel">Embed Code:</h4>
       </div>
       <div class="modal-body">
-        	<pre>&lt;iframe id="liveblog-event" width="550" height="900" frameborder="0" src="www.example.com/view/:event_id"&gt;&lt;/iframe&gt;</pre>
+        	<pre>&lt;a href="www.readitlive.net/read/{{ _id }}"&gt;Read it Live: {{ eventTitle }}&lt;/a&gt;</pre>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -137,5 +131,5 @@
 
 
 
-	</div>
+</div>
 </template>

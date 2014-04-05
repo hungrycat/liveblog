@@ -1,0 +1,82 @@
+<template name="read">
+
+<!-- navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+	  	<div class="navbar-header">
+	    	<a class="navbar-brand" href="/eventsList">ReadItLive</a>
+	  	</div>
+	  	<h4 class="navbar-text">
+	  	{{ eventTitle }}
+	  	</h4>
+	    <ul class="nav navbar-nav navbar-right">
+	    	<li>
+	    		<span class="label label-default navbar-label">Event {{ isLive }}</span>
+	    	</li>
+
+	    	<li class="navbar-text">
+	    		{{> loginButtons }}
+	    	</li>
+	    </ul>
+	</div>
+</div>
+
+<!-- add comment -->
+<div id="comments-form" class="row-fluid">
+	<form class="form-inline" role="form">
+		<textarea class='animated col-xs-6' id="commentText"></textarea>
+		<div class="col-xs-2">
+			<button type="submit" class="btn btn-primary" id="submitComment">Comment</button>
+
+		</div>
+	</form>
+</div>
+
+
+<div class="row-fluid">
+	<div class="col-xs-12 col-md-8 posts-container">
+
+		<!-- loop over the posts -->
+		{{ #each listPosts}}
+			<!-- <individual post> -->
+
+			<div class="row-fluid">
+				<div class="col-xs-10">
+					<div class="post">
+						<div class="displayPost">
+
+							{{ #if imageURL }}
+								<img src="{{imageURL}}" class="img-responsive">
+							{{else}}
+								{{ # if postIsComment }}
+									<p>{{ commentator }}: </p>
+									<blockquote>
+										<p>{{ postText }}</p>
+									</blockquote>
+								{{ else }}
+									<pre class="edit-textarea">{{postText}}</pre>
+								{{ /if }}
+							{{ /if }}
+							<p class="post-meta"><strong>{{ author }}</strong> {{ postTimeString }} ago</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- </individual post> -->
+		{{ /each }}
+	</div>  <!-- /posts -->
+</div>
+</template>
+<!-- 
+
+(if user is logged in, show username, otherwise show a box for them to input a name)
+post comment box - - text area?) 
+post!
+
+
+
+
+
+
+ -->

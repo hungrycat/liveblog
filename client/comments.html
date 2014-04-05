@@ -1,0 +1,23 @@
+<template name="comments">
+
+<h2>Comments</h2>
+
+		<!-- loop over the comments -->
+		{{ #each listComments}}
+			{{#if editing}}
+				<div class="editComment">
+					<textarea class='col-xs-12 editCommentText animated' id="editCommentText">{{ commentText }}</textarea>
+				</div>
+			{{else}}
+				<div class="col-xs-10">
+					<p>{{ commentator }}: </p>
+					<blockquote class="comment edit-textarea">
+						<p>{{ commentText }}</p>
+					</blockquote>
+				</div>
+				<div class="col-xs-2">
+					<button type="button" class="btn btn-xs btn-primary side-btn-sm submitComment">Post</button>
+				</div>
+			{{ /if }}
+		{{ /each }}
+</template>
