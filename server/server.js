@@ -31,6 +31,20 @@ Meteor.publish('comments', function(eventId) {
   return Comments.find({ eventId: eventId});
 });
 
+Meteor.publish('yourAvatar', function(userId) {
+    return Meteor.users.find({_id: userId},
+    {fields: {'avatarUrl': 1}});
+});
+
+
+//allows users to add their avatar image
+Meteor.users.allow({
+  update: function (userId, doc, fields, modifier) {
+
+    return fields[0] === 'avatarUrl';
+  }
+});
+
 
 /////S3 stuff
 
@@ -85,7 +99,6 @@ Meteor.methods({
 		});
 	}, 
 	postImage: function  (url,imageData){
-		console.log('Add '+url);
 	}
 });
 

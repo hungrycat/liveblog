@@ -3,7 +3,7 @@ html 					{ overflow-y:scroll; }
 body 					{ padding-top:70px; }
 
 .navbar-btn {
-	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .event-listing {  
@@ -54,6 +54,10 @@ textarea {
 	color: #333;
 	background: #FDFDFD; 
 
+}
+
+.nava-ava {
+	height: 50px;
 }
 
 /*

@@ -23,3 +23,7 @@ Comments = new Meteor.Collection('comments');
 	// author: "commentator"
 	// eventId: this._id,
 	// time: Date.now()
+
+
+//Users  
+	// avatarUrl: s3
