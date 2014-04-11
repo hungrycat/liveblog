@@ -1,0 +1,58 @@
+<template name="displayPost"> 
+
+
+	<div class="row-fluid display-post">
+		<div class="col-xs-12">
+			<div class="row-fluid">
+				{{ #if imageURL }}
+					<div class="col-xs-12">
+						<img src="{{imageURL}}" class="img-responsive">
+					</div>
+				{{else}}
+					{{ # if postIsComment }}
+						{{ #if avatarUrl }}
+							<div class="col-xs-3">
+								<img class="img-responsive" src="{{avatarUrl}}">
+							</div>
+							<div class="col-xs-9"> 
+								<p>{{ commentator }}: </p>
+								<blockquote>
+									<p>{{ postText }}</p>
+								</blockquote>
+							</div>
+
+						{{ else }}
+							<div class="col-xs-12">
+								<p>{{ commentator }}: </p>
+								<blockquote>
+									<p>{{ postText }}</p>
+								</blockquote>
+							</div>
+						{{ /if }}
+					{{ else }}
+						{{ #if avatarUrl }}
+							<div class="col-xs-3">
+								<img class="img-responsive" src="{{avatarUrl}}">
+							</div>
+							<div class="col-xs-9">
+								<pre class="edit-textarea">{{{postText}}}</pre>
+							</div>
+						{{ else }}
+							<div class="col-xs-12">
+								<pre class="edit-textarea">{{{postText}}}</pre>
+							</div>
+						{{ /if }}
+					{{ /if }}
+				{{ /if }}
+			</div>
+			<div class="row-fluid">
+				<div class="col-xs-12">
+					<p class="post-meta"><strong>{{ author }}</strong> {{ postTimeString }} ago</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</template>
+

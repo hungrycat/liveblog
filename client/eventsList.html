@@ -1,11 +1,12 @@
 <template name="eventsList">
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="navbar navbar-default" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/eventsList">ReadItLive</a>
 			</div>
 		  
 			<ul class="nav navbar-nav navbar-right">
+				{{ > navAvatar }}
 				<li class="navbar-text">
 					{{> loginButtons }}
 				</li>
@@ -52,5 +53,8 @@
 
  			<!-- /Events LIST -->
 		</div>
+<!-- 		<div class="container">
+			{{> adminTemplate }}
+		</div> -->
 	</div>
 </template>

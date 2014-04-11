@@ -1,31 +1,13 @@
 Template.read.helpers({
 	listPosts: function () {
 		return Posts.find({eventId: this._id}, { sort: { time: -1 }});
-	}, 
-	isLive: function () {
-		return this.eventIsLive ? "Live" : "Ended";
 	},
 
-	postTimeString: function () {
-			// function to figure out how long ago something was posted
-		var calcTimeAgo = function (t) {		
-			var str = "";
-			var diff = ( Date.now() - t )/1000; //difference in seconds
-			var days = diff / ( 60*60*24) ;
-			if (days >= 2 ) { return parseInt(days) + " days";}
-			else if (days >= 1 ) {return "1 day";} 
-			var hours = diff / (60*60);
-			if (hours >= 2 ) { return parseInt(hours) + " hours";}
-			else if (hours >= 1 ) {return "1 hour";} 
-			var mins = diff / (60);
-			if (mins >= 2 ) { return parseInt(mins) + " minutes";}
-			else if (mins >= 1 ) {return "1 minute";} 
-			if (diff >= 2 ) {return parseInt(diff) + " seconds"; }
-			else { return "moments"; }
-
-		};
-		return calcTimeAgo(this.time);
+	isLive: function () {
+		return this.eventIsLive ? "Live" : "Ended";
 	}
+
+
 });
 
 Template.read.events({
@@ -34,15 +16,25 @@ Template.read.events({
 		event.preventDefault();
 
 		var commentText = document.getElementById('commentText').value;
-		var user = Meteor.user();
-		
+
+
 		if (commentText !== '' && commentText !== null) {
-	        Comments.insert({
-	          commentText: commentText,
-	          commentator: "commentator",
-	          eventId: this._id,
-	          time: Date.now()
-	        });
+
+			var user = Meteor.user();
+
+			var doc = {
+				commentText: commentText,
+				commentator: "commentator",
+				eventId: Session.get("currentEvent"),
+				time: Date.now(),
+			}
+
+			if (user !== null && user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
+			if (user !== null && user.username) { doc["commentator"] = user.username; };
+
+	        Comments.insert(doc);
+
+	        console.log("%O", doc);
 
 	        document.getElementById('commentText').value = '';
 	        commentText.value = '';

@@ -13,7 +13,7 @@ Posts = new Meteor.Collection('posts');
 	// eventId: this._id,
 	// time: Date.now()
 	// postIsComment: BOOL
-
+	// avatarUrl: url
 
 
 
@@ -27,3 +27,6 @@ Comments = new Meteor.Collection('comments');
 
 //Users  
 	// avatarUrl: s3
+
+//this is for counting number of viewers
+People = new Meteor.Collection("people");

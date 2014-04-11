@@ -21,13 +21,16 @@
 
 <template name="main">
 
-	{{ #unless currentUser }}
+	<h3>Welcome to ReadItLive.net</h3>
+	{{ # if currentUser}}
+		{{#if isAdminUser}}
+			{{ EventsListPageRedirect }}
+		{{ /if }}
+	{{ else }}
 		Please Login
 		{{> loginButtons }}
-	{{ /unless }}
-	{{ #if currentUser }}
-		{{ EventsListPageRedirect }}
 	{{ /if }}
+
 </template>
 
 

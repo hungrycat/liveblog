@@ -52,14 +52,18 @@ Template.comments.events({
 
 		var user = Meteor.user();
 
-		Posts.insert({
+		var doc = {
 			postText: this.commentText,
 			author: user.username,
 			eventId: Session.get("currentEvent"),
 			time: Date.now(), 
 			postIsComment: true, 
-			commentator: "commentator"
-		});
+			commentator: this.commentator
+		}
+
+		if (this.avatarUrl) { doc["avatarUrl"] = this.avatarUrl; }
+
+		Posts.insert(doc);
 
 		Meteor.call("deleteComment", this._id);
 	}, 

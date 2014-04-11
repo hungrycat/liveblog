@@ -12,11 +12,12 @@ Session.setDefault('editing_comment_id', null);
 Template.main.helpers({
 	EventsListPageRedirect: function () {
 		Router.go('/eventsList');
+	}, 
+	isAdminUser: function() {
+		return Roles.userIsInRole(Meteor.user(), ['admin']);
 	}
 
 
 });
-
-
 
 

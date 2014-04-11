@@ -49,31 +49,9 @@ Template.eventLive.helpers({
 		return this.eventIsLive ? "Live" : "Ended";
 	}, 
 
-	//this doesn't update when a new post comes in. Somehow this code should be put in Deps.autorun(function(){ })
-	postTimeString: function () {
-			// function to figure out how long ago something was posted
-		var calcTimeAgo = function (t) {		
-			var str = "";
-			var diff = ( Date.now() - t )/1000; //difference in seconds
-			var days = diff / ( 60*60*24) ;
-			if (days >= 2 ) { return parseInt(days) + " days";}
-			else if (days >= 1 ) {return "1 day";} 
-			var hours = diff / (60*60);
-			if (hours >= 2 ) { return parseInt(hours) + " hours";}
-			else if (hours >= 1 ) {return "1 hour";} 
-			var mins = diff / (60);
-			if (mins >= 2 ) { return parseInt(mins) + " minutes";}
-			else if (mins >= 1 ) {return "1 minute";} 
-			if (diff >= 2 ) {return parseInt(diff) + " seconds"; }
-			else { return "moments"; }
-
-		};
-		return calcTimeAgo(this.time);
-	}, 
-	editing: function () {
+	editing: function() {
 		return Session.equals('editing_post_id', this._id);
 	}
-
 
 });
 
@@ -118,8 +96,8 @@ Template.eventLive.events({
 
 					ctx.drawImage(img, 0, 0);
 
-					var MAX_WIDTH = 700;
-					var MAX_HEIGHT = 900;
+					var MAX_WIDTH = 400;
+					var MAX_HEIGHT = 400;
 					var width = img.width;
 					var height = img.height;
 					 
@@ -190,109 +168,15 @@ Template.eventLive.events({
 						var user = Meteor.user();
 						////now post the image!
 
-						Posts.insert({
-				          imageURL: url,
-				          author: user.username,
-				          eventId: Session.get("currentEvent"),
-				          time: Date.now()
-				        });
+						var doc = {
+							imageURL: url,
+				          	author: user.username,
+				          	eventId: Session.get("currentEvent"),
+				          	time: Date.now(),
+						}
+						if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
 
-					});
-				};
-
-				reader.readAsDataURL(file);
-			}
-		});
-	},
-	'change #avatar-upload-file': function (e) {
-		var files = e.currentTarget.files;
-		_.each(files,function(file){
-			var reader = new FileReader;
-			var fileData = {
-				name:file.name,
-				size:file.size,
-				type:file.type
-			};
-
-		var imageData = 'No data';
-
-		var callback = "postImage";
-
-			//Setting uploading to true.
-
-			Session.set('uploading', true);
-
-
-			if (!file.type.match(/image.*/)) {
-				Session.set('uploading', false);
-			}
-			else{
-				//IMAGE CANVAS
-
-				var img = document.createElement("img");
-
-				reader.onload = function (e) {
-					//CANVAS
-					img.src = e.target.result;
-					var canvas = document.createElement('canvas');
-					var ctx = canvas.getContext("2d");
-
-
-
-
-
-					ctx.drawImage(img, 0, 0);
-
-					var MAX_WIDTH = 150;
-					var MAX_HEIGHT = 150;
-					var width = img.width;
-					var height = img.height;
-					 
-					if (width > height) {
-					  if (width > MAX_WIDTH) {
-					    height *= MAX_WIDTH / width;
-					    width = MAX_WIDTH;
-					  }
-					} else {
-					  if (height > MAX_HEIGHT) {
-					    width *= MAX_HEIGHT / height;
-					    height = MAX_HEIGHT;
-					  }
-					}
-					canvas.width = width;
-					canvas.height = height;
-					var ctx = canvas.getContext("2d");
-
-
-
-
-					
-
-   					ctx.drawImage(img, 0, 0, width, height);
-
-					var dataUrl = canvas.toDataURL(fileData.type);
-					var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64')+7,dataUrl.length));
-					var length = binaryImg.length;
-					var ab = new ArrayBuffer(length);
-					var ua = new Uint8Array(ab);
-					for (var i = 0; i < length; i++){
-						ua[i] = binaryImg.charCodeAt(i);
-					}
-
-					//fileData.data = new Uint8Array(reader.result);
-					fileData.data = ua;
-
-
-					Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
-
-						Session.set('uploading', false);
-
-
-						////add the image to the user account
-						Meteor.users.update(
-							{ _id: Meteor.userId() }, 
-							{ $set: { avatarUrl: url } }
-						);
+						Posts.insert(doc);
 
 					});
 				};
@@ -307,18 +191,48 @@ Template.eventLive.events({
 		var postText = document.getElementById('postText').value;
 		var user = Meteor.user();
 
+
+
+
 		if (postText !== '' && postText !== null) {
-			Posts.insert({
+			var doc = {
 				postText: postText,
 				author: user.username,
-				eventId: this._id,
-				time: Date.now()
-			});
+				eventId: Session.get("currentEvent"),
+				time: Date.now(),
+			}
+			if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
+
+			Posts.insert(doc);
 
 			document.getElementById('postText').value = '';
 			postText.value = '';
 		}
 	}, 
+		//same as above but for control-enter
+	'keydown #postText': function (evt) {
+		if (evt.ctrlKey && ( evt.which === 13 || evt.which === 10) ) { 
+			var postText = document.getElementById('postText').value;
+			var user = Meteor.user();
+
+			if (postText !== '' && postText !== null) {
+				var doc = {
+					postText: postText,
+					author: user.username,
+					eventId: Session.get("currentEvent"),
+					time: Date.now(),
+				}
+				if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
+
+				Posts.insert(doc);
+
+				document.getElementById('postText').value = '';
+				postText.value = '';
+			}
+
+		}
+
+	},
 
 	'click .deletePost' : function () {
 		Meteor.call("deletePost", this._id);
@@ -329,34 +243,6 @@ Template.eventLive.events({
 		Meteor.call("liveDead", this._id);
 
 	}, 
-
-	'keydown #postText': function (evt) {
-		if (evt.ctrlKey && ( evt.which === 13 || evt.which === 10) ) { 
-			var postText = document.getElementById('postText').value;
-			var user = Meteor.user();
-
-			if (postText !== '' && postText !== null) {
-				Posts.insert({
-					postText: postText,
-					author: user.username,
-					eventId: this._id,
-					time: Date.now()
-				});
-
-				document.getElementById('postText').value = '';
-				postText.value = '';
-			}
-
-		}
-
-	},
-
-//// comments events
-
-
-
-
-
 
 ////////////events for live editing////////////
 
@@ -396,4 +282,23 @@ Template.eventLive.rendered = function () {
 
 
 };
+
+
+Template.eventLive.count = function () {
+    if (People.find() != undefined) {
+        return People.find().fetch().length;
+    }
+    return 'Well well well...';
+}
+
+var max = 0;
+
+Template.eventLive.maxCount = function () {
+    if (People.find() != undefined) {
+        var curr = People.find().fetch().length;
+        if (curr > max) { max = curr; }
+        return max;
+    }
+    return 'Well well well...';
+}
 

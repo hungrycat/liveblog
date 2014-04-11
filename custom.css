@@ -1,6 +1,6 @@
 
 html 					{ overflow-y:scroll; }
-body 					{ padding-top:70px; }
+/*body 					{ padding-top:70px; }*/
 
 .navbar-btn {
 	margin-right: 10px;
@@ -58,6 +58,12 @@ textarea {
 
 .nava-ava {
 	height: 50px;
+	padding: 0px;
+}
+
+.display-post {
+
+	margin-bottom: 10px;
 }
 
 /*
