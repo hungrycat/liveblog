@@ -185,21 +185,32 @@ Template.eventLive.events({
 		var user = Meteor.user();
 
 
-
+//<a href="http://www.nytimes.com" target="_blank">www.nytimes.com</a>
+// <a href="http://www.w3schools.com" target="_blank">Visit W3Schools</a>
 
 		if (postText !== '' && postText !== null) {
 
-			postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
-			   return '<a href="http://'+ link +'">'+ link +'</a>';
-			});
+			// postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
+			//    return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
+			// });
 
 
-			var doc = {
-				postText: postText,
-				author: user.username,
-				eventId: Session.get("currentEvent"),
-				time: Date.now(),
-			}
+				var timeNow = new Date;
+
+				var euh = timeNow.getUTCHours() + 1;
+
+				var eum = timeNow.getUTCMinutes();
+
+
+				var timeEUString = euh + ":" + eum + " CET";
+
+				var doc = {
+					postText: postText,
+					author: user.username,
+					eventId: Session.get("currentEvent"),
+					time: timeNow,
+					timeEU: timeEUString
+				}
 			if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
 
 			var cmtr = Session.get("commentator");
@@ -224,35 +235,47 @@ Template.eventLive.events({
 
 			var postText = document.getElementById('postText').value;
 
-			postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
-			   return '<a href="http://'+ link +'">'+ link +'</a>';
-			});
+			// postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
+			//    return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
+			// });
 
-			var user = Meteor.user();
+				
 
-					if (postText !== '' && postText !== null) {
-			var doc = {
-				postText: postText,
-				author: user.username,
-				eventId: Session.get("currentEvent"),
-				time: Date.now(),
+			if (postText !== '' && postText !== null) {
+				var user = Meteor.user();
+
+				var timeNow = new Date;
+
+				var euh = timeNow.getUTCHours() + 1;
+
+				var eum = timeNow.getUTCMinutes();
+
+
+				var timeEUString = euh + ":" + eum + " CET";
+
+				var doc = {
+					postText: postText,
+					author: user.username,
+					eventId: Session.get("currentEvent"),
+					time: timeNow,
+					timeEU: timeEUString
+				}
+				if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
+
+				var cmtr = Session.get("commentator");
+				if (cmtr !== '' && cmtr !== null) {
+					doc["author"] = cmtr;
+					doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
+				}
+						
+
+				Posts.insert(doc);
+
+				document.getElementById('postText').value = '';
+				postText.value = '';
+				Session.set('commentator', null);
+				Session.set('commentatorAvatarUrl', null);
 			}
-			if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
-
-			var cmtr = Session.get("commentator");
-			if (cmtr !== '' && cmtr !== null) {
-				doc["author"] = cmtr;
-				doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
-			}
-					
-
-			Posts.insert(doc);
-
-			document.getElementById('postText').value = '';
-			postText.value = '';
-			Session.set('commentator', null);
-			Session.set('commentatorAvatarUrl', null);
-		}
 
 		}
 
