@@ -14,6 +14,7 @@ Posts = new Meteor.Collection('posts');
 	// time: Date.now()
 	// postIsComment: BOOL
 	// avatarUrl: url
+	// timeEU: timeEUString
 
 
 

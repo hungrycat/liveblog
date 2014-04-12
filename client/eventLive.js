@@ -198,8 +198,10 @@ Template.eventLive.events({
 				var timeNow = new Date;
 
 				var euh = timeNow.getUTCHours() + 1;
+				if (euh < 10 ) { euh = "0" + euh; }
 
 				var eum = timeNow.getUTCMinutes();
+				if (eum < 10 ) { eum = "0" + eum; }
 
 
 				var timeEUString = euh + ":" + eum + " CET";
@@ -247,8 +249,10 @@ Template.eventLive.events({
 				var timeNow = new Date;
 
 				var euh = timeNow.getUTCHours() + 1;
+				if (euh < 10 ) { euh = "0" + euh; }
 
 				var eum = timeNow.getUTCMinutes();
+				if (eum < 10 ) { eum = "0" + eum; }
 
 
 				var timeEUString = euh + ":" + eum + " CET";
