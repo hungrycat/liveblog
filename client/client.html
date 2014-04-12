@@ -25,6 +25,20 @@
 	{{ # if currentUser}}
 		{{#if isAdminUser}}
 			{{ EventsListPageRedirect }}
+		{{ else }}
+			{{#each listEvents}}
+
+				<div class="row-fluid">
+					<div class="col-xs-6 col-xs-offset-1">
+						<div class="event-listing">
+							<a href="/read/{{ _id }}"> {{ eventTitle }} </a>
+							<span class="label label-default"> {{ isLive }} </span>
+						</div>
+					</div>
+				</div>
+
+
+			{{/each}}
 		{{ /if }}
 	{{ else }}
 		Please Login
@@ -34,6 +48,9 @@
 </template>
 
 
+<template name="loading">
+	<p>...loading...</p>
+</template>
 
 
 

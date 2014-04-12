@@ -6,9 +6,33 @@ body {
 	background-color: #E8ECED;
 }
 
+
+.navbar-default {
+    background-color: #35262D;
+    border-color: #E7E7E7;
+}
+
+
+.navbar-default .navbar-brand {
+    color: #DDD;
+
+}
+
+.navbar-default .navbar-text{
+
+    color: #DDD;
+}
+
+
 .navbar-btn {
 	margin-right: 10px;
 }
+
+.paypal-button  {
+	margin: 10px;
+}
+
+
 
 .event-listing {  
 	    border-left: 3px solid #eee;  
@@ -17,6 +41,10 @@ body {
 	    margin: 5px 0px; 
 	    background: #FDFDFD; 
 	}  
+
+#commentText {
+	background-color: #FFFBFF;
+}
 
 .posts-container {
 	margin-top: 30px;

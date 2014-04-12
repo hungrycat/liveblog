@@ -21,3 +21,12 @@ Template.main.helpers({
 });
 
 
+Template.main.helpers({
+	listEvents: function () {
+		return Events.find({}, { sort: { time: -1 }});
+	}, 
+	isLive: function () {
+		return this.eventIsLive ? "Live" : "Ended";
+	}
+});
+
