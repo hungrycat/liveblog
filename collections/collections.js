@@ -28,5 +28,3 @@ Comments = new Meteor.Collection('comments');
 //Users  
 	// avatarUrl: s3
 
-//this is for counting number of viewers
-People = new Meteor.Collection("people");

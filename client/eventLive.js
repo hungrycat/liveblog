@@ -295,21 +295,3 @@ Template.eventLive.rendered = function () {
 };
 
 
-Template.eventLive.count = function () {
-    if (People.find() != undefined) {
-        return People.find().fetch().length;
-    }
-    return 'Well well well...';
-}
-
-var max = 0;
-
-Template.eventLive.maxCount = function () {
-    if (People.find() != undefined) {
-        var curr = People.find().fetch().length;
-        if (curr > max) { max = curr; }
-        return max;
-    }
-    return 'Well well well...';
-}
-
