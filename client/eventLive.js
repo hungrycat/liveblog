@@ -185,26 +185,23 @@ Template.eventLive.events({
 		var user = Meteor.user();
 
 
-//<a href="http://www.nytimes.com" target="_blank">www.nytimes.com</a>
-// <a href="http://www.w3schools.com" target="_blank">Visit W3Schools</a>
-
 		if (postText !== '' && postText !== null) {
 
-			// postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
-			//    return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
-			// });
+				postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
+				   return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
+				});
 
 
 				var timeNow = new Date;
 
-				var euh = timeNow.getUTCHours() + 1;
+				var euh = timeNow.getUTCHours() + 2;
 				if (euh < 10 ) { euh = "0" + euh; }
 
 				var eum = timeNow.getUTCMinutes();
 				if (eum < 10 ) { eum = "0" + eum; }
 
 
-				var timeEUString = euh + ":" + eum + " CET";
+				var timeEUString = euh + ":" + eum + " CEST";
 
 				var doc = {
 					postText: postText,
@@ -231,15 +228,15 @@ Template.eventLive.events({
 		}
 	}, 
 		//same as above but for control-enter
-	'keyup #postText': function (evt) {
+	'keydown #postText': function (evt) {
 		if (evt.ctrlKey && ( evt.which === 13 || evt.which === 10) ) { 
 
 
 			var postText = document.getElementById('postText').value;
 
-			// postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
-			//    return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
-			// });
+			postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
+			   return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
+			});
 
 				
 
@@ -248,14 +245,14 @@ Template.eventLive.events({
 
 				var timeNow = new Date;
 
-				var euh = timeNow.getUTCHours() + 1;
+				var euh = timeNow.getUTCHours() + 2;
 				if (euh < 10 ) { euh = "0" + euh; }
 
 				var eum = timeNow.getUTCMinutes();
 				if (eum < 10 ) { eum = "0" + eum; }
 
 
-				var timeEUString = euh + ":" + eum + " CET";
+				var timeEUString = euh + ":" + eum + " CEST";
 
 				var doc = {
 					postText: postText,
@@ -284,6 +281,58 @@ Template.eventLive.events({
 		}
 
 	},
+	//same as above but doesn't try to recognize links
+	'click #embedPost' : function (event) {
+		event.preventDefault();
+
+		var postText = document.getElementById('postText').value;
+		var user = Meteor.user();
+
+
+		if (postText !== '' && postText !== null) {
+
+				var timeNow = new Date;
+
+				var euh = timeNow.getUTCHours() + 2;
+				if (euh < 10 ) { euh = "0" + euh; }
+
+				var eum = timeNow.getUTCMinutes();
+				if (eum < 10 ) { eum = "0" + eum; }
+
+
+				var timeEUString = euh + ":" + eum + " CEST";
+
+				var doc = {
+					postText: postText,
+					author: user.username,
+					eventId: Session.get("currentEvent"),
+					time: timeNow,
+					timeEU: timeEUString
+				}
+			if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
+
+			var cmtr = Session.get("commentator");
+			if (cmtr !== '' && cmtr !== null) {
+				doc["author"] = cmtr;
+				doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
+			}
+					
+
+			Posts.insert(doc);
+
+			document.getElementById('postText').value = '';
+			postText.value = '';
+			Session.set('commentator', null);
+			Session.set('commentatorAvatarUrl', null);
+		}
+	}, 
+
+
+	'click a[target=_blank]': function (event) {
+		event.preventDefault();
+		window.open(event.target.href, '_blank');
+	},
+
 
 	'click .deletePost' : function () {
 		Meteor.call("deletePost", this._id);

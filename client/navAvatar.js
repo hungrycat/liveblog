@@ -54,8 +54,8 @@ Template.navAvatar.events({
 
 					ctx.drawImage(img, 0, 0);
 
-					var MAX_WIDTH = 100;
-					var MAX_HEIGHT = 100;
+					var MAX_WIDTH = 80;
+					var MAX_HEIGHT = 80;
 					var width = img.width;
 					var height = img.height;
 					 

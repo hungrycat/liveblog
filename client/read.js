@@ -39,6 +39,11 @@ Template.read.events({
 	        document.getElementById('commentText').value = '';
 	        commentText.value = '';
       	}
+	}, 
+	//ensures that links open in new window, for some reason we have to override the default event to do that
+	'click a[target=_blank]': function (event) {
+		event.preventDefault();
+		window.open(event.target.href, '_blank');
 	}
 });
 
