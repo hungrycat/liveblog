@@ -188,6 +188,12 @@ Template.eventLive.events({
 
 
 		if (postText !== '' && postText !== null) {
+
+			postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
+			   return '<a href="http://'+ link +'">'+ link +'</a>';
+			});
+
+
 			var doc = {
 				postText: postText,
 				author: user.username,
@@ -214,7 +220,14 @@ Template.eventLive.events({
 		//same as above but for control-enter
 	'keyup #postText': function (evt) {
 		if (evt.ctrlKey && ( evt.which === 13 || evt.which === 10) ) { 
+
+
 			var postText = document.getElementById('postText').value;
+
+			postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
+			   return '<a href="http://'+ link +'">'+ link +'</a>';
+			});
+
 			var user = Meteor.user();
 
 					if (postText !== '' && postText !== null) {
