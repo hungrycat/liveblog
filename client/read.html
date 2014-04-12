@@ -1,5 +1,7 @@
 <template name="read">
 
+
+
 <!-- navbar -->
 <div class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
@@ -24,13 +26,16 @@
 <!-- add comment -->
 {{ # if currentUser}}
 <div id="comments-form" class="row-fluid">
-	<form class="form-inline" role="form">
-		<textarea class='animated col-xs-6' id="commentText"></textarea>
-		<div class="col-xs-2">
-			<button type="submit" class="btn btn-primary" id="submitComment">Comment</button>
+		<form class="form-inline" role="form">
+			<div class="col-xs-8 col-md-6 col-md-offset-4">
+				<textarea class='animated col-xs-12' id="commentText"></textarea>
+			</div>
+			<div class="col-xs-4 col-md-2">
+				<button type="submit" class="btn btn-primary" id="submitComment">Comment</button>
 
-		</div>
-	</form>
+			</div>
+		</form>
+
 </div>
 {{ /if }}
 

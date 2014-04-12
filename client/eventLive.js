@@ -165,18 +165,11 @@ Template.eventLive.events({
 						Session.set('S3url', url);
 						Session.set('uploading', false);
 
-						var user = Meteor.user();
-						////now post the image!
+						var imageHtml = "<img class=\"img-responsive\" src=\"" + url + "\">";
 
-						var doc = {
-							imageURL: url,
-				          	author: user.username,
-				          	eventId: Session.get("currentEvent"),
-				          	time: Date.now(),
-						}
-						if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
+						document.getElementById('postText').value = imageHtml;
 
-						Posts.insert(doc);
+
 
 					});
 				};
@@ -203,32 +196,50 @@ Template.eventLive.events({
 			}
 			if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
 
+			var cmtr = Session.get("commentator");
+			if (cmtr !== '' && cmtr !== null) {
+				doc["author"] = cmtr;
+				doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
+			}
+					
+
 			Posts.insert(doc);
 
 			document.getElementById('postText').value = '';
 			postText.value = '';
+			Session.set('commentator', null);
+			Session.set('commentatorAvatarUrl', null);
 		}
 	}, 
 		//same as above but for control-enter
-	'keydown #postText': function (evt) {
+	'keyup #postText': function (evt) {
 		if (evt.ctrlKey && ( evt.which === 13 || evt.which === 10) ) { 
 			var postText = document.getElementById('postText').value;
 			var user = Meteor.user();
 
-			if (postText !== '' && postText !== null) {
-				var doc = {
-					postText: postText,
-					author: user.username,
-					eventId: Session.get("currentEvent"),
-					time: Date.now(),
-				}
-				if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
-
-				Posts.insert(doc);
-
-				document.getElementById('postText').value = '';
-				postText.value = '';
+					if (postText !== '' && postText !== null) {
+			var doc = {
+				postText: postText,
+				author: user.username,
+				eventId: Session.get("currentEvent"),
+				time: Date.now(),
 			}
+			if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
+
+			var cmtr = Session.get("commentator");
+			if (cmtr !== '' && cmtr !== null) {
+				doc["author"] = cmtr;
+				doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
+			}
+					
+
+			Posts.insert(doc);
+
+			document.getElementById('postText').value = '';
+			postText.value = '';
+			Session.set('commentator', null);
+			Session.set('commentatorAvatarUrl', null);
+		}
 
 		}
 

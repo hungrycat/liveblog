@@ -47,41 +47,37 @@ Template.comments.helpers({
 
 
 Template.comments.events({	  
-	'click .submitComment' : function (event) {
-		event.preventDefault();
-
-		var user = Meteor.user();
-
-		var doc = {
-			postText: this.commentText,
-			author: user.username,
-			eventId: Session.get("currentEvent"),
-			time: Date.now(), 
-			postIsComment: true, 
-			commentator: this.commentator
-		}
-
-		if (this.avatarUrl) { doc["avatarUrl"] = this.avatarUrl; }
-
-		Posts.insert(doc);
-
-		Meteor.call("deleteComment", this._id);
-	}, 
-
 	'click .comment': function (evt) {
 		// prevent clicks on <a> from refreshing the page.
 		evt.preventDefault();
 	},
+	'dblclick  .comment' : function (event) {
+		event.preventDefault();
 
-	'dblclick .comment': function (evt, tmpl) { // start editing list name
-		Session.set('editing_comment_id', this._id);
+		var user = Meteor.user();
 
-		Deps.flush(); // force DOM redraw, so we can focus the edit field
+		var commentHtml = "<blockquote class=\"com-bq\">" + this.commentText + "</blockquote><strong>" + user.username + "</strong>: " ;
 
-		activateInput(tmpl.find("#editCommentText"));
-		$(".animated").autosize({append: "\n"});
-		$(".animated").trigger('autosize.resize');
+		document.getElementById('postText').value = commentHtml;
+
+		Session.set("commentator", this.commentator);
+		if (this.avatarUrl) { Session.set("commentatorAvatarUrl", this.avatarUrl) };
+
+
+		Meteor.call("deleteComment", this._id);
 	}
+
+
+
+	// 'dblclick .comment': function (evt, tmpl) { // start editing list name
+	// 	Session.set('editing_comment_id', this._id);
+
+	// 	Deps.flush(); // force DOM redraw, so we can focus the edit field
+
+	// 	activateInput(tmpl.find("#editCommentText"));
+	// 	$(".animated").autosize({append: "\n"});
+	// 	$(".animated").trigger('autosize.resize');
+	// }
 });
 
 Template.comments.events(okCancelEvents(

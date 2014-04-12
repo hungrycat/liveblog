@@ -1,53 +1,20 @@
 <template name="displayPost"> 
 
 
-	<div class="row-fluid display-post">
-		<div class="col-xs-12">
+	<div class="row-fluid">
+		<div class="col-xs-12 post">
 			<div class="row-fluid">
-				{{ #if imageURL }}
-					<div class="col-xs-12">
-						<img src="{{imageURL}}" class="img-responsive">
-					</div>
-				{{else}}
-					{{ # if postIsComment }}
-						{{ #if avatarUrl }}
-							<div class="col-xs-3">
-								<img class="img-responsive" src="{{avatarUrl}}">
-							</div>
-							<div class="col-xs-9"> 
-								<p>{{ commentator }}: </p>
-								<blockquote>
-									<p>{{ postText }}</p>
-								</blockquote>
-							</div>
-
-						{{ else }}
-							<div class="col-xs-12">
-								<p>{{ commentator }}: </p>
-								<blockquote>
-									<p>{{ postText }}</p>
-								</blockquote>
-							</div>
-						{{ /if }}
+				<div class="col-xs-2 col-md-2 col-md-offset-3 post-side">
+					{{ #if avatarUrl }}
+						<img class="img-responsive avatar-pic" height="80" width="80" src="{{avatarUrl}}">
 					{{ else }}
-						{{ #if avatarUrl }}
-							<div class="col-xs-3">
-								<img class="img-responsive" src="{{avatarUrl}}">
-							</div>
-							<div class="col-xs-9">
-								<pre class="edit-textarea">{{{postText}}}</pre>
-							</div>
-						{{ else }}
-							<div class="col-xs-12">
-								<pre class="edit-textarea">{{{postText}}}</pre>
-							</div>
-						{{ /if }}
+						<!-- alternative blank avater -->
 					{{ /if }}
-				{{ /if }}
-			</div>
-			<div class="row-fluid">
-				<div class="col-xs-12">
-					<p class="post-meta"><strong>{{ author }}</strong> {{ postTimeString }} ago</p>
+					<p class="post-meta">{{ author }}</p> 
+					<p class="post-meta">{{ postTimeString }} ago</p>
+				</div>  <!-- /post side -->
+				<div class="col-xs-10 col-md-7 post-body">
+					<pre class="post-body-text">{{{ postText }}}</pre>
 				</div>
 			</div>
 		</div>
