@@ -42,7 +42,7 @@ var activateInput = function (input) {
 
 Template.eventLive.helpers({
 	listPosts: function () {
-		return Posts.find({eventId: this._id}, { sort: { time: -1 }});
+		return this.eventIsLive ?  Posts.find({eventId: this._id}, { sort: { time: -1 }}) :  Posts.find({eventId: this._id}, { sort: { time: 1 }});
 	}, 
 
 	isLive: function () {
