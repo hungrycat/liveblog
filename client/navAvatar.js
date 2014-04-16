@@ -1,117 +1,117 @@
 Template.navAvatar.helpers({
-	userHasAvatar: function () {
-		if (Meteor.user()) {
-			var u = Meteor.user();
-			if (u.avatarUrl !== '' && u.avatarUrl !== null && u.avatarUrl !== undefined ) { return true; }
-		};
-		return false;
-	},
-	getAvatarUrl: function () {
-		return Meteor.user().avatarUrl;
-	}
+  userHasAvatar: function () {
+    if (Meteor.user()) {
+      var u = Meteor.user();
+      if (u.avatarUrl !== '' && u.avatarUrl !== null && u.avatarUrl !== undefined ) { return true; }
+    };
+    return false;
+  },
+  getAvatarUrl: function () {
+    return Meteor.user().avatarUrl;
+  }
 
 
 });
 
 Template.navAvatar.events({
 
-	'change #avatar-upload-file': function (e) {
-		var files = e.currentTarget.files;
-		_.each(files,function(file){
-			var reader = new FileReader;
-			var fileData = {
-				name:file.name,
-				size:file.size,
-				type:file.type
-			};
+  'change #avatar-upload-file': function (e) {
+    var files = e.currentTarget.files;
+    _.each(files,function(file){
+      var reader = new FileReader;
+      var fileData = {
+        name:file.name,
+        size:file.size,
+        type:file.type
+      };
 
-		var imageData = 'No data';
+    var imageData = 'No data';
 
-		var callback = "postImage";
+    var callback = "postImage";
 
-			//Setting uploading to true.
+      //Setting uploading to true.
 
-			Session.set('uploading', true);
-
-
-			if (!file.type.match(/image.*/)) {
-				Session.set('uploading', false);
-			}
-			else{
-				//IMAGE CANVAS
-
-				var img = document.createElement("img");
-
-				reader.onload = function (e) {
-					//CANVAS
-					img.src = e.target.result;
-					var canvas = document.createElement('canvas');
-					var ctx = canvas.getContext("2d");
+      Session.set('uploading', true);
 
 
+      if (!file.type.match(/image.*/)) {
+        Session.set('uploading', false);
+      }
+      else{
+        //IMAGE CANVAS
 
+        var img = document.createElement("img");
 
-
-					ctx.drawImage(img, 0, 0);
-
-					var MAX_WIDTH = 80;
-					var MAX_HEIGHT = 80;
-					var width = img.width;
-					var height = img.height;
-					 
-					if (width > height) {
-					  if (width > MAX_WIDTH) {
-					    height *= MAX_WIDTH / width;
-					    width = MAX_WIDTH;
-					  }
-					} else {
-					  if (height > MAX_HEIGHT) {
-					    width *= MAX_HEIGHT / height;
-					    height = MAX_HEIGHT;
-					  }
-					}
-					canvas.width = width;
-					canvas.height = height;
-					var ctx = canvas.getContext("2d");
+        reader.onload = function (e) {
+          //CANVAS
+          img.src = e.target.result;
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext("2d");
 
 
 
 
-					
 
-   					ctx.drawImage(img, 0, 0, width, height);
+          ctx.drawImage(img, 0, 0);
 
-					var dataUrl = canvas.toDataURL(fileData.type);
-					var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64')+7,dataUrl.length));
-					var length = binaryImg.length;
-					var ab = new ArrayBuffer(length);
-					var ua = new Uint8Array(ab);
-					for (var i = 0; i < length; i++){
-						ua[i] = binaryImg.charCodeAt(i);
-					}
+          var MAX_WIDTH = 80;
+          var MAX_HEIGHT = 80;
+          var width = img.width;
+          var height = img.height;
+           
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          var ctx = canvas.getContext("2d");
 
-					//fileData.data = new Uint8Array(reader.result);
-					fileData.data = ua;
 
 
-					Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
 
-						Session.set('uploading', false);
+          
+
+            ctx.drawImage(img, 0, 0, width, height);
+
+          var dataUrl = canvas.toDataURL(fileData.type);
+          var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64')+7,dataUrl.length));
+          var length = binaryImg.length;
+          var ab = new ArrayBuffer(length);
+          var ua = new Uint8Array(ab);
+          for (var i = 0; i < length; i++){
+            ua[i] = binaryImg.charCodeAt(i);
+          }
+
+          //fileData.data = new Uint8Array(reader.result);
+          fileData.data = ua;
 
 
-						////add the image to the user account
-						Meteor.users.update(
-							{ _id: Meteor.userId() }, 
-							{ $set: { avatarUrl: url } }
-						);
+          Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
 
-					});
-				};
+            Session.set('uploading', false);
 
-				reader.readAsDataURL(file);
-			}
-		});
-	}
+
+            ////add the image to the user account
+            Meteor.users.update(
+              { _id: Meteor.userId() }, 
+              { $set: { avatarUrl: url } }
+            );
+
+          });
+        };
+
+        reader.readAsDataURL(file);
+      }
+    });
+  }
 });
 
 

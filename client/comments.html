@@ -2,13 +2,13 @@
 
 <h2>Comments <br><small>Double-click to post</small></h2>
 
-		<!-- loop over the comments -->
-		{{ #each listComments}}
-			<div class="col-xs-10">
-				<p>{{ commentator }}:      {{ postTimeString }} ago</p>
-				<blockquote class="comment">
-					<p>{{ commentText }}</p>
-				</blockquote>
-			</div>
-		{{ /each }}
+    <!-- loop over the comments -->
+    {{ #each listComments}}
+      <div class="col-xs-10">
+        <p>{{ commentator }}:      {{ postTimeString }} ago</p>
+        <blockquote class="comment">
+          <p>{{ commentText }}</p>
+        </blockquote>
+      </div>
+    {{ /each }}
 </template>
