@@ -28,18 +28,39 @@ Template.read.events({
         eventId: Session.get("currentEvent"),
         time: Date.now(),
       }
+      var facebookID = user.services.facebook.id;
 
-      if (user !== null && user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
-      if (user !== null && user.username) { doc["commentator"] = user.username; };
+      //set user image
 
-          Comments.insert(doc);
+      if (user !== null && ( user.avatarUrl || facebookID) ) { 
+        if (facebookID !== null && facebookID !== undefined ) {
+            doc["avatarURL"] = "http://graph.facebook.com/" + facebookID + "/picture/?type=large"; 
+        } else  {
+            doc["avatarUrl"] = user.avatarUrl; 
+        } 
+      };
 
-          console.log("%O", doc);
+      //set username
 
-          document.getElementById('commentText').value = '';
-          commentText.value = '';
+      if (user !== null && ( user.username || facebookID )) { 
+        if (facebookID !== null && facebookID !== undefined ) {
+          doc["commentator"] = user.services.facebook.first_name + " " + user.services.facebook.last_name;
+        } else {
+          doc["commentator"] = user.username; 
         }
+      };
+
+
+
+
+      Comments.insert(doc);
+
+      document.getElementById('commentText').value = '';
+      commentText.value = '';
+    }
   }, 
+
+
   //ensures that links open in new window, for some reason we have to override the default event to do that
   'click a[target=_blank]': function (event) {
     event.preventDefault();

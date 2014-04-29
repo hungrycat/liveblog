@@ -71,6 +71,8 @@ Template.comments.events({
     // prevent clicks on <a> from refreshing the page.
     evt.preventDefault();
   },
+
+
   'dblclick  .comment' : function (event) {
     event.preventDefault();
 
@@ -82,6 +84,9 @@ Template.comments.events({
 
     Session.set("commentator", this.commentator);
     if (this.avatarUrl) { Session.set("commentatorAvatarUrl", this.avatarUrl) };
+
+    console.log(this);
+    console.log(Session.get("commentatorAvatarUrl"));
 
 
     Meteor.call("deleteComment", this._id);

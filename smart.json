@@ -1,10 +1,11 @@
 {
   "packages": {
-    "accounts-ui-bootstrap-3": {},
+
     "bootstrap-3": {},
     "npm": {},
     "iron-router": {},
     "roles": {},
-    "accounts-admin-ui-bootstrap-3": {}
+    "accounts-admin-ui-bootstrap-3": {},
+    "accounts-ui-bootstrap-3-blaze": {}
   }
 }

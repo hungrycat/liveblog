@@ -38,6 +38,61 @@ var activateInput = function (input) {
 };
 
 
+//////////////// generic function to post ////////////////////////////////
+var postNow = function (recognizeLinks) {
+
+  var postText = document.getElementById('postText').value;
+
+  if (recognizeLinks !== false) {
+
+    postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
+       return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
+    });
+  };
+
+      
+
+  if (postText !== '' && postText !== null) {
+    var user = Meteor.user();
+
+    var timeNow = new Date;
+
+    var euh = timeNow.getUTCHours() + 2;
+    if (euh < 10 ) { euh = "0" + euh; }
+
+    var eum = timeNow.getUTCMinutes();
+    if (eum < 10 ) { eum = "0" + eum; }
+
+
+    var timeEUString = euh + ":" + eum + " CEST";
+
+    var doc = {
+      postText: postText,
+      author: user.username,
+      eventId: Session.get("currentEvent"),
+      time: timeNow,
+      timeEU: timeEUString
+    }
+    if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
+
+    var cmtr = Session.get("commentator");
+    if (cmtr !== '' && cmtr !== null) {
+      doc["author"] = cmtr;
+      doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
+      console.dir(doc);
+    }
+        
+
+    Posts.insert(doc);
+
+    document.getElementById('postText').value = '';
+    postText.value = '';
+    Session.set('commentator', null);
+    Session.set('commentatorAvatarUrl', null);
+  }
+}
+
+
 
 
 Template.eventLive.helpers({
@@ -178,156 +233,26 @@ Template.eventLive.events({
       }
     });
   },
+
+  //post the post
+
   'click #submitPost' : function (event) {
     event.preventDefault();
+    postNow();
+  },
 
-    var postText = document.getElementById('postText').value;
-    var user = Meteor.user();
-
-
-    if (postText !== '' && postText !== null) {
-
-        postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
-           return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
-        });
-
-
-        var timeNow = new Date;
-
-        var euh = timeNow.getUTCHours() + 2;
-        if (euh < 10 ) { euh = "0" + euh; }
-
-        var eum = timeNow.getUTCMinutes();
-        if (eum < 10 ) { eum = "0" + eum; }
-
-
-        var timeEUString = euh + ":" + eum + " CEST";
-
-        var doc = {
-          postText: postText,
-          author: user.username,
-          eventId: Session.get("currentEvent"),
-          time: timeNow,
-          timeEU: timeEUString
-        }
-      if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
-
-      var cmtr = Session.get("commentator");
-      if (cmtr !== '' && cmtr !== null) {
-        doc["author"] = cmtr;
-        doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
-      }
-          
-
-      Posts.insert(doc);
-
-      document.getElementById('postText').value = '';
-      postText.value = '';
-      Session.set('commentator', null);
-      Session.set('commentatorAvatarUrl', null);
-    }
-  }, 
-    //same as above but for control-enter
   'keydown #postText': function (evt) {
     if (evt.ctrlKey && ( evt.which === 13 || evt.which === 10) ) { 
-
-
-      var postText = document.getElementById('postText').value;
-
-      postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
-         return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
-      });
-
-        
-
-      if (postText !== '' && postText !== null) {
-        var user = Meteor.user();
-
-        var timeNow = new Date;
-
-        var euh = timeNow.getUTCHours() + 2;
-        if (euh < 10 ) { euh = "0" + euh; }
-
-        var eum = timeNow.getUTCMinutes();
-        if (eum < 10 ) { eum = "0" + eum; }
-
-
-        var timeEUString = euh + ":" + eum + " CEST";
-
-        var doc = {
-          postText: postText,
-          author: user.username,
-          eventId: Session.get("currentEvent"),
-          time: timeNow,
-          timeEU: timeEUString
-        }
-        if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
-
-        var cmtr = Session.get("commentator");
-        if (cmtr !== '' && cmtr !== null) {
-          doc["author"] = cmtr;
-          doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
-        }
-            
-
-        Posts.insert(doc);
-
-        document.getElementById('postText').value = '';
-        postText.value = '';
-        Session.set('commentator', null);
-        Session.set('commentatorAvatarUrl', null);
-      }
-
+      postNow();
     }
-
   },
+
   //same as above but doesn't try to recognize links
   'click #embedPost' : function (event) {
-    event.preventDefault();
+    postNow(false);
+  },
 
-    var postText = document.getElementById('postText').value;
-    var user = Meteor.user();
-
-
-    if (postText !== '' && postText !== null) {
-
-        var timeNow = new Date;
-
-        var euh = timeNow.getUTCHours() + 2;
-        if (euh < 10 ) { euh = "0" + euh; }
-
-        var eum = timeNow.getUTCMinutes();
-        if (eum < 10 ) { eum = "0" + eum; }
-
-
-        var timeEUString = euh + ":" + eum + " CEST";
-
-        var doc = {
-          postText: postText,
-          author: user.username,
-          eventId: Session.get("currentEvent"),
-          time: timeNow,
-          timeEU: timeEUString
-        }
-      if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
-
-      var cmtr = Session.get("commentator");
-      if (cmtr !== '' && cmtr !== null) {
-        doc["author"] = cmtr;
-        doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
-      }
-          
-
-      Posts.insert(doc);
-
-      document.getElementById('postText').value = '';
-      postText.value = '';
-      Session.set('commentator', null);
-      Session.set('commentatorAvatarUrl', null);
-    }
-  }, 
-
-
+  //so that external links can open in a new window
   'click a[target=_blank]': function (event) {
     event.preventDefault();
     window.open(event.target.href, '_blank');
@@ -346,18 +271,20 @@ Template.eventLive.events({
 
 ////////////events for live editing////////////
 
-    'click .post': function (evt) {
-      // prevent clicks on <a> from refreshing the page.
-      evt.preventDefault();
-    },
-    'dblclick .post': function (evt, tmpl) { // start editing list name
-      Session.set('editing_post_id', this._id);
+  'click .post': function (evt) {
+    // prevent clicks on <a> from refreshing the page.
+    evt.preventDefault();
+  },
 
-      Deps.flush(); // force DOM redraw, so we can focus the edit field
-      activateInput(tmpl.find("#editPostText"));
-      $(".animated").autosize({append: "\n"});
-    $(".animated").trigger('autosize.resize');
-    },
+
+  'dblclick .post': function (evt, tmpl) { // start editing list name
+    Session.set('editing_post_id', this._id);
+
+    Deps.flush(); // force DOM redraw, so we can focus the edit field
+    activateInput(tmpl.find("#editPostText"));
+    $(".animated").autosize({append: "\n"});
+  $(".animated").trigger('autosize.resize');
+  },
 });
 
 Template.eventLive.events(okCancelEvents(
