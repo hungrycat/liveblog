@@ -34,7 +34,7 @@ Template.read.events({
 
       if (user !== null && ( user.avatarUrl || facebookID) ) { 
         if (facebookID !== null && facebookID !== undefined ) {
-            doc["avatarURL"] = "http://graph.facebook.com/" + facebookID + "/picture/?type=large"; 
+            doc["avatarUrl"] = "http://graph.facebook.com/" + facebookID + "/picture/?type=large"; 
         } else  {
             doc["avatarUrl"] = user.avatarUrl; 
         } 

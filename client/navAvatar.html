@@ -10,9 +10,12 @@
 				<img src="{{ getAvatarUrl }}" data-toggle="modal" data-target="#avatar-upload" class="nava-ava">
 			</li>
 		{{ else }}
-			<li>
-				<button class="btn btn-default navbar-btn " data-toggle="modal" data-target="#avatar-upload">Add Avatar</button>
-			</li>
+		
+			{{ #if notFacebookUser }}
+				<li>
+					<button class="btn btn-default navbar-btn " data-toggle="modal" data-target="#avatar-upload">Add Avatar</button>
+				</li>
+			{{ /if }}
 
 		{{ /if }}
 	{{ /if }}

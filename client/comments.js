@@ -83,10 +83,11 @@ Template.comments.events({
     document.getElementById('postText').value = commentHtml;
 
     Session.set("commentator", this.commentator);
-    if (this.avatarUrl) { Session.set("commentatorAvatarUrl", this.avatarUrl) };
+    if (this.avatarUrl) { 
+      Session.set("commentatorAvatarUrl", this.avatarUrl) 
+    };
 
-    console.log(this);
-    console.log(Session.get("commentatorAvatarUrl"));
+
 
 
     Meteor.call("deleteComment", this._id);

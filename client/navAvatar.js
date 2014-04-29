@@ -6,9 +6,20 @@ Template.navAvatar.helpers({
     };
     return false;
   },
+
+  notFacebookUser: function () {
+    if (Meteor.user().services.facebook !== undefined ) {
+      return false;
+    } else {
+      return true;
+    }
+
+  },
+
   getAvatarUrl: function () {
     return Meteor.user().avatarUrl;
   }
+
 
 
 });
