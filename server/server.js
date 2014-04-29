@@ -138,8 +138,8 @@ Meteor.methods({
 });
 
 Meteor.call("S3config", {
-    key: 'AKIAJODG7HGKEOAGMW7Q',
-    secret: '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',
+    key: 'AKIAI5EA5G55DHMWVDNQ',
+    secret: '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',
     bucket: 'liveblogphotos',
     region: "us-west-2"
 });
