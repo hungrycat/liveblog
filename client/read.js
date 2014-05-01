@@ -28,7 +28,11 @@ Template.read.events({
         eventId: Session.get("currentEvent"),
         time: Date.now(),
       }
-      var facebookID = user.services.facebook.id;
+
+      if (user.services.facebook) {
+        var facebookID = user.services.facebook.id;
+      }
+      
 
       //set user image
 
@@ -56,6 +60,57 @@ Template.read.events({
       Comments.insert(doc);
 
       document.getElementById('commentText').value = '';
+      commentText.value = '';
+    }
+  }, 
+
+  'click #submitCommentModal' : function (event) {
+    event.preventDefault();
+
+    var commentText = document.getElementById('commentTextModal').value;
+
+
+    if (commentText !== '' && commentText !== null) {
+
+      var user = Meteor.user();
+
+      var doc = {
+        commentText: commentText,
+        commentator: "commentator",
+        eventId: Session.get("currentEvent"),
+        time: Date.now(),
+      }
+      
+      if (user.services.facebook) {
+        var facebookID = user.services.facebook.id;
+      }
+
+      //set user image
+
+      if (user !== null && ( user.avatarUrl || facebookID) ) { 
+        if (facebookID !== null && facebookID !== undefined ) {
+            doc["avatarUrl"] = "http://graph.facebook.com/" + facebookID + "/picture/?type=large"; 
+        } else  {
+            doc["avatarUrl"] = user.avatarUrl; 
+        } 
+      };
+
+      //set username
+
+      if (user !== null && ( user.username || facebookID )) { 
+        if (facebookID !== null && facebookID !== undefined ) {
+          doc["commentator"] = user.services.facebook.first_name + " " + user.services.facebook.last_name;
+        } else {
+          doc["commentator"] = user.username; 
+        }
+      };
+
+
+
+
+      Comments.insert(doc);
+
+      document.getElementById('commentTextModal').value = '';
       commentText.value = '';
     }
   }, 
