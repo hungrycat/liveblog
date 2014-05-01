@@ -4,6 +4,8 @@ html          { overflow-y:scroll; }
 
 body {
   background-color: #E8ECED;
+  font-family:  AvenirNext, Helvetica, sans-serif;
+
 }
 
 
@@ -36,7 +38,6 @@ body {
 
 .event-listing {  
       border-left: 3px solid #eee;  
-/*     border-radius: 5px;*/
       padding: 10px 10px;  
       margin: 5px 0px; 
       background: #FDFDFD; 
@@ -74,7 +75,7 @@ textarea {
 
 
 .edit-textarea {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: 'Crimson Text', Georgia, serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333;
@@ -104,7 +105,7 @@ textarea {
 
 .post-meta {
   margin-bottom: 0;
-  color: #111;
+  color: #333;
   clear: both;
 
 }
@@ -125,17 +126,11 @@ textarea {
   padding-bottom: 12px; 
 }
 
-.com-bq {
-  font-size: 16px;
-  border-left: 5px solid #aaa;
-  margin-bottom: 8px;
-  padding: 5px 12px;
-}
 
 .post-body-text
 {
 
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family:  AvenirNext, Helvetica, sans-serif;
   display: block;
   padding: 0;
   margin: 0 ;
@@ -151,6 +146,15 @@ textarea {
   white-space: pre-wrap;
 }
 
+/*for if the post is a comment*/
+.com-bq {
+  font-size: 16px;
+  border-left: 5px solid #aaa;
+  margin-bottom: 8px;
+  padding: 5px 12px;
+}
+
+
 /* for the comments on the event live page */
 .comment { 
   border: 1px solid #ccc;
@@ -164,6 +168,12 @@ textarea {
 
   .navbar {
     margin-bottom: 10px;
+
+  }
+  .post-side {
+    padding: 0;
+    font-size: 12px;
+    padding-right: 5px;
 
   }
 
@@ -181,18 +191,24 @@ textarea {
   .avatar-pic   {
     border-radius: 0;
     float: right;
-    padding: 0;
-    padding-right: 5px;
 
   }
 
   .post-body {
-    border: 0;
-    border-radius: 0;
-    padding: 0;
-    border-bottom: 2px;
+    border-radius: 3px;
+    padding: 4px 8px;
 
+  }
 
+  .post-body-text {
+    font-size: 14px;
+    line-height: 1.6em;
+  }
+  .com-bq {
+    font-size: 14px;
+    border-left: 3px solid #aaa;
+    margin-bottom: 3px;
+    padding: 4px 4px;
   }
 
 }
