@@ -109,12 +109,13 @@ textarea {
 
 }
 
-.avatar-pic 
-{
+.avatar-pic {
   border-radius: 4px;
   float: right;
 
 }
+
+
 
 .post-body {
   border: 1px solid #ccc;
@@ -155,4 +156,32 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #FFFBFF;
+}
+
+
+
+@media (max-width: 768px) {
+  .avatar-pic   {
+    border-radius: 0;
+    float: right;
+    padding: 0;
+    padding-right: 5px;
+
+  }
+  .post-body {
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px;
+
+  }
+  .post {
+    padding-bottom: 0;
+
+  }
+  .posts-container {
+    margin-top: 10px;
+  }
+
 }

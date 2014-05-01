@@ -4,7 +4,7 @@
 	<div class="row-fluid">
 		<div class="col-xs-12 post">
 			<div class="row-fluid">
-				<div class="col-xs-2 col-md-2 col-md-offset-3 post-side">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-md-offset-3 post-side hidden-xs">
 					{{ #if avatarUrl }}
 						<img class="img-responsive avatar-pic" height="80" width="80" src="{{avatarUrl}}">
 					{{ else }}
@@ -14,8 +14,13 @@
 					<!-- <p class="post-meta">{{ postTimeString }} ago</p> -->
 					<p class="post-meta">{{ timeEU }} </p>
 				</div>  <!-- /post side -->
-				<div class="col-xs-10 col-md-7 post-body">
-					<pre class="post-body-text">{{{ postText }}}</pre>
+				<div class="col-xs-12 col-sm-10 col-md-7 post-body">
+				  {{ #if avatarUrl }}
+						<img class="img-responsive avatar-pic col-xs-2 col-xs-pull-10 visible-xs" height="80" width="80" src="{{avatarUrl}}">
+					{{ else }}
+						<!-- alternative blank avater -->
+					{{ /if }}
+					<pre class="post-body-text col-xs-10 col-xs-push-2">{{{ postText }}}</pre>
 				</div>
 			</div>
 		</div>
