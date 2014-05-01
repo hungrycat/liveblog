@@ -15,12 +15,17 @@
 					<p class="post-meta">{{ timeEU }} </p>
 				</div>  <!-- /post side -->
 				<div class="col-xs-12 col-sm-10 col-md-7 post-body">
-				  {{ #if avatarUrl }}
-						<img class="img-responsive avatar-pic col-xs-2 col-xs-pull-10 visible-xs" height="80" width="80" src="{{avatarUrl}}">
-					{{ else }}
-						<!-- alternative blank avater -->
-					{{ /if }}
-					<pre class="post-body-text col-sm-12 col-sm-push-0 col-xs-10 col-xs-push-2">{{{ postText }}}</pre>
+					<div class="avatar-pic col-xs-3 col-xs-pull-9 visible-xs">
+						{{ #if avatarUrl }}
+							<img class="img-responsive " height="80" width="80" src="{{avatarUrl}}">
+							<p class="post-meta visible-xs">{{ author }} {{ timeEU }}</p> 
+						{{ else }}
+							<!-- alternative blank avater -->
+						{{ /if }}
+					</div>
+
+					<pre class="post-body-text col-sm-12 col-sm-push-0 col-xs-9 col-xs-push-3">{{{ postText }}}</pre>
+					
 				</div>
 			</div>
 		</div>

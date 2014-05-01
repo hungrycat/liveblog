@@ -161,6 +161,23 @@ textarea {
 
 
 @media (max-width: 768px) {
+
+  .navbar {
+    margin-bottom: 10px;
+
+  }
+
+  .posts-container {
+    margin-top: 10px;
+    padding: 0;
+  }
+
+  .post {
+    padding: 0;
+    margin-bottom: 10px;
+
+  }
+
   .avatar-pic   {
     border-radius: 0;
     float: right;
@@ -168,22 +185,14 @@ textarea {
     padding-right: 5px;
 
   }
+
   .post-body {
     border: 0;
     border-radius: 0;
     padding: 0;
-    padding-bottom: 10px;
     border-bottom: 2px;
 
 
-  }
-  .post {
-    padding: 0;
-
-  }
-  .posts-container {
-    margin-top: 10px;
-    padding: 0;
   }
 
 }
