@@ -107,6 +107,16 @@ textarea {
   margin-bottom: 0;
   color: #333;
   clear: both;
+  font-family:  AvenirNext-DemiBold, Helvetica, sans-serif;
+  font-size: 14px;
+
+}
+.post-meta-time {
+  margin-bottom: 0;
+  color: #888;
+    font-size: 12px;
+
+
 
 }
 
@@ -189,15 +199,32 @@ textarea {
   }
 
   .avatar-pic   {
-    border-radius: 0;
+    border-radius: 2px;
     float: right;
 
+  }
+  .no-padding {
+    padding: 0;
   }
 
   .post-body {
     border-radius: 3px;
     padding: 4px 8px;
 
+  }
+
+  .post-meta {
+    font-family:  AvenirNext-DemiBold, Helvetica, sans-serif;
+    font-size: 12px;
+    margin-bottom: 0;
+    color: #999;
+    padding: 0;
+    text-align: right;
+
+  }
+  .post-meta-time {
+    font-size: 10px;
+    color: #999;
   }
 
   .post-body-text {

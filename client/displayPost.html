@@ -11,14 +11,24 @@
 					{{ else }}
 						<!-- alternative blank avater -->
 					{{ /if }}
-					<p class="post-meta">{{ author }}</p> 
-					<!-- <p class="post-meta">{{ postTimeString }} ago</p> -->
-					<p class="post-meta">{{ timeEU }} </p>
+					<div class="hidden-xs">
+						<p class="post-meta">{{ author }}</p> 
+					</div>
+					<p class="post-meta post-meta-time">{{ timeEU }} </p>
+
 				</div>  
 
-				<div class="col-xs-10 col-sm-10 col-md-7 post-body">
-					<pre class="post-body-text">{{{ postText }}}</pre>
+				<div class="col-xs-10 col-md-7 no-padding">
+					<div class="post-body col-xs-12">
+
+						<pre class="post-body-text">{{{ postText }}}</pre>
+					</div>
+					<div class="post-meta visible-xs col-xs-12">
+							<span>{{ author }} </span> 
+					</div>
+
 				</div>
+
 
 			</div>
 		</div>
