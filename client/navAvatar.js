@@ -8,7 +8,7 @@ Template.navAvatar.helpers({
   },
 
   notFacebookUser: function () {
-    if (Meteor.user().services.facebook !== undefined ) {
+    if ('facebook' in Meteor.user().services) {
       return false;
     } else {
       return true;

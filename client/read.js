@@ -29,7 +29,7 @@ Template.read.events({
         time: Date.now(),
       }
 
-      if (user.services.facebook) {
+      if ('facebook' in user.services) {
         var facebookID = user.services.facebook.id;
       }
       
