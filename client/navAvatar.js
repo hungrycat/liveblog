@@ -8,11 +8,16 @@ Template.navAvatar.helpers({
   },
 
   notFacebookUser: function () {
-    if ('facebook' in Meteor.user().services) {
-      return false;
+    if ('services' in Meteor.user()) {
+      if ('facebook' in Meteor.user().services) {
+         return false;
+      } else {
+        return true;
+      }
     } else {
       return true;
     }
+
 
   },
 
