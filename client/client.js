@@ -15,7 +15,13 @@ Template.main.helpers({
 	}, 
 	isAdminUser: function() {
 		return Roles.userIsInRole(Meteor.user(), ['admin']);
-	}
+	}, 
+	listEvents: function () {
+    return Events.find({}, { sort: { time: -1 }});
+  }, 
+  isLive: function () {
+    return this.eventIsLive ? "Live" : "Ended";
+  }
 
 
 });
