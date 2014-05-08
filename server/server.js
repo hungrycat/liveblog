@@ -16,7 +16,11 @@ Meteor.methods({
 
 });
 
-
+//for number of viewers
+Meteor.publish('userPresence', function() {
+  var filter = {}; 
+  return Meteor.presences.find(filter, {fields: {state: true}});
+});
 
 
 Meteor.publish('events', function() {

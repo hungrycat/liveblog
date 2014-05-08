@@ -107,6 +107,9 @@ Template.eventLive.helpers({
 
   editing: function() {
     return Session.equals('editing_post_id', this._id);
+  }, 
+  usersOnline: function() {
+    return Meteor.presences.find({}, {fields: {state: true}}).count();
   }
 
 });
