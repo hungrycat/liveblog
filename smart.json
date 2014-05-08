@@ -5,7 +5,6 @@
     "iron-router": {},
     "roles": {},
     "accounts-admin-ui-bootstrap-3": {},
-    "accounts-ui-bootstrap-3-blaze": {},
-    "presence": {}
+    "accounts-ui-bootstrap-3-blaze": {}
   }
 }

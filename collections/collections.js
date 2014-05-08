@@ -29,3 +29,6 @@ Comments = new Meteor.Collection('comments');
 //Users  
   // avatarUrl: s3
 
+Presences = new Meteor.Collection('presences');
+// For backwards compatibilty
+Meteor.presences = Presences;
