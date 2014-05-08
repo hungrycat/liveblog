@@ -18,8 +18,7 @@ Meteor.methods({
 
 //for number of viewers
 Meteor.publish('userPresence', function() {
-  var filter = {}; 
-  return Meteor.presences.find(filter, {fields: {state: true}});
+  return Meteor.presences.find({});
 });
 
 
@@ -71,6 +70,13 @@ Events.allow({
 
 //all CRUD allowed on posts by admins
 Posts.allow({ 
+	insert: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
+	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
+	remove: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; } 
+});
+
+//for user online tracking
+Meteor.presences.allow({ 
 	insert: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
 	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
 	remove: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; } 

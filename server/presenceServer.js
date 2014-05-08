@@ -53,4 +53,4 @@ Meteor.setInterval(function() {
     if (connection.lastSeen < (Date.now() - 240000))
       expire(id);
   });
-}, 10000); // Update our user count every 10 seconds
+}, 5000); // Update our user count every 5 seconds

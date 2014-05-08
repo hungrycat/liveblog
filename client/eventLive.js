@@ -111,7 +111,6 @@ Template.eventLive.helpers({
   usersOnline: function() {
     return Meteor.presences.find({}, {fields: {state: true}}).count();
   }
-
 });
 
 Template.eventLive.events({
