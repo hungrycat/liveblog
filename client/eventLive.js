@@ -73,14 +73,15 @@ var postNow = function (recognizeLinks) {
       time: timeNow,
       timeEU: timeEUString
     }
+
     if (user.avatarUrl) { doc["avatarUrl"] = user.avatarUrl; };
 
     var cmtr = Session.get("commentator");
-    if (cmtr !== '' && cmtr !== null) {
+    if (cmtr !== '' && cmtr !== null && cmtr !== undefined) {
       doc["author"] = cmtr;
       doc["avatarUrl"] = Session.get("commentatorAvatarUrl");
-      console.dir(doc);
     }
+
         
 
     Posts.insert(doc);
@@ -90,7 +91,7 @@ var postNow = function (recognizeLinks) {
     Session.set('commentator', null);
     Session.set('commentatorAvatarUrl', null);
   }
-}
+};
 
 
 
@@ -216,7 +217,6 @@ Template.eventLive.events({
 
 
           Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
-            console.log("uploading complete! url is: " + url);
             Session.set('S3url', url);
             Session.set('uploading', false);
 
@@ -243,6 +243,7 @@ Template.eventLive.events({
 
   'keydown #postText': function (evt) {
     if (evt.ctrlKey && ( evt.which === 13 || evt.which === 10) ) { 
+
       postNow();
     }
   },
