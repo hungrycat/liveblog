@@ -113,7 +113,7 @@ textarea {
 }
 .post-meta-time {
   margin-bottom: 0;
-  color: #888;
+  color: #666;
     font-size: 12px;
 
 
@@ -129,7 +129,8 @@ textarea {
 
 
 .post-body {
-  border: 1px solid #ccc;
+  border: 1px solid;
+  border-color: #E7E7E7;
   border-radius: 8px;
   background-color: #FFFBFF;
   padding-top: 12px;
