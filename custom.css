@@ -244,6 +244,11 @@ textarea {
 }
 
 
+#offscreen {
+    position: absolute;
+    left: -999em;
+}
+
 /*responsive embedded video*/
 
 .video-container {

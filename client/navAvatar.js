@@ -60,7 +60,18 @@ Template.navAvatar.events({
 
         reader.onload = function (e) {
           //CANVAS
+          // var off = document.getElementById('offscreen');
+          // off.appendChild(img);
+
+
           img.src = e.target.result;
+
+
+
+          // if (img.width) {
+          //   console.log(img.width);
+          // };
+
           var canvas = document.createElement('canvas');
 
           var MAX_WIDTH = 80;
@@ -68,9 +79,9 @@ Template.navAvatar.events({
           var width = img.width;
           var height = img.height;
 
-          console.log("width: " + width);
 
-          console.log(img);
+
+
 
 
            
@@ -96,13 +107,11 @@ Template.navAvatar.events({
 
 
           var dataUrl = canvas.toDataURL(fileData.type);
-          console.log("dataUrl");
-          console.log(dataUrl);     
 
 
           var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64') + 7, dataUrl.length));
           var length = binaryImg.length;
-          console.log("length: " + length);
+
 
           var ab = new ArrayBuffer(length);
           var ua = new Uint8Array(ab);
