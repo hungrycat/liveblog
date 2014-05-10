@@ -48,10 +48,11 @@ var postNow = function (recognizeLinks) {
     postText = postText.replace(/(www\..+?)(\s|$)/g, function(text, link) {
        return '<a href="http://'+ link +'"target="_blank">'+ link +'</a>';
     });
-  };
+  } else {
+    postText = '<div class="video-container">' + postText + '</div>';
+  }
 
-      
-
+    
   if (postText !== '' && postText !== null) {
     var user = Meteor.user();
 
