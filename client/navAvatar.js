@@ -41,9 +41,9 @@ Template.navAvatar.events({
         type:file.type
       };
 
-    var imageData = 'No data';
+      var imageData = 'No data';
 
-    var callback = "postImage";
+      var callback = "postImage";
 
       //Setting uploading to true.
 
@@ -56,24 +56,23 @@ Template.navAvatar.events({
       else{
         //IMAGE CANVAS
 
-        var img = document.createElement("img");
+        var img = new Image();
 
         reader.onload = function (e) {
           //CANVAS
           img.src = e.target.result;
           var canvas = document.createElement('canvas');
-          var ctx = canvas.getContext("2d");
-
-
-
-
-
-          ctx.drawImage(img, 0, 0);
 
           var MAX_WIDTH = 80;
           var MAX_HEIGHT = 80;
           var width = img.width;
           var height = img.height;
+
+          console.log("width: " + width);
+
+          console.log(img);
+
+
            
           if (width > height) {
             if (width > MAX_WIDTH) {
@@ -88,18 +87,23 @@ Template.navAvatar.events({
           }
           canvas.width = width;
           canvas.height = height;
-          var ctx = canvas.getContext("2d");
 
 
 
+          var ctx = canvas.getContext("2d");     
 
-          
+          ctx.drawImage(img, 0, 0, width, height);
 
-            ctx.drawImage(img, 0, 0, width, height);
 
           var dataUrl = canvas.toDataURL(fileData.type);
-          var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64')+7,dataUrl.length));
+          console.log("dataUrl");
+          console.log(dataUrl);     
+
+
+          var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64') + 7, dataUrl.length));
           var length = binaryImg.length;
+          console.log("length: " + length);
+
           var ab = new ArrayBuffer(length);
           var ua = new Uint8Array(ab);
           for (var i = 0; i < length; i++){
@@ -114,13 +118,14 @@ Template.navAvatar.events({
 
             Session.set('uploading', false);
 
-
-            ////add the image to the user account
-            Meteor.users.update(
-              { _id: Meteor.userId() }, 
-              { $set: { avatarUrl: url } }
-            );
-
+            if (err) {console.log(err)}
+            else { 
+              ////add the image to the user account
+              Meteor.users.update(
+                { _id: Meteor.userId() }, 
+                { $set: { avatarUrl: url } }
+              );
+            }
           });
         };
 

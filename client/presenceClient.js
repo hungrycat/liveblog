@@ -17,5 +17,5 @@ Meteor.startup(function() {
   });
   Meteor.setInterval(function() {
     Meteor.call('presenceTick');
-  }, 120000); //check in every 2 min
-});
+  }, 1000000); //check in every 2 min
+});  

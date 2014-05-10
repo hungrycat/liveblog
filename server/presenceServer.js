@@ -48,9 +48,9 @@ Meteor.methods({
 });
 
 Meteor.setInterval(function() {
-  //expece online user to check in at least once every 4 min.
+  //expece online user to check in at least once every 30 min
   _.each(connections, function(connection, id) {
-    if (connection.lastSeen < (Date.now() - 240000))
+    if (connection.lastSeen < (Date.now() - 3000000))
       expire(id);
   });
 }, 5000); // Update our user count every 5 seconds
