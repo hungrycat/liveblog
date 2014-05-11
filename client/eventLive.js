@@ -146,90 +146,93 @@ Template.eventLive.events({
         reader.onload = function (e) {
           //CANVAS
           img.src = e.target.result;
-          var canvas = document.createElement('canvas');
-          var ctx = canvas.getContext("2d");
+
+          img.onload = function () {
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext("2d");
 
 
 
 
 
-          ctx.drawImage(img, 0, 0);
+            ctx.drawImage(img, 0, 0);
 
-          var MAX_WIDTH = 400;
-          var MAX_HEIGHT = 400;
-          var width = img.width;
-          var height = img.height;
-           
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
+            var MAX_WIDTH = 400;
+            var MAX_HEIGHT = 400;
+            var width = img.width;
+            var height = img.height;
+             
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
             }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
+            canvas.width = width;
+            canvas.height = height;
+            var ctx = canvas.getContext("2d");
+
+
+
+
+            
+
+  // var exif = EXIF.readFromBinaryFile(new BinaryFile(e.target.result));
+  // console.log("%O", exif);
+  // switch(exif.Orientation){
+
+  //     case 8:
+  //            ctx.rotate(90*Math.PI/180);
+  //            break;
+  //        case 3:
+  //            ctx.rotate(180*Math.PI/180);
+  //            break;
+  //        case 6:
+  //            ctx.rotate(-90*Math.PI/180);
+  //            break;
+
+  //        case 8:
+  //            ctx.rotate(90*Math.PI/180);
+  //            break;
+  //        case 3:
+  //            ctx.rotate(180*Math.PI/180);
+  //            break;
+  //        case 6:
+  //            ctx.rotate(-90*Math.PI/180);
+  //            break;
+  //     }
+            ctx.drawImage(img, 0, 0, width, height);
+
+            var dataUrl = canvas.toDataURL(fileData.type);
+            var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64')+7,dataUrl.length));
+            var length = binaryImg.length;
+            var ab = new ArrayBuffer(length);
+            var ua = new Uint8Array(ab);
+            for (var i = 0; i < length; i++){
+              ua[i] = binaryImg.charCodeAt(i);
             }
+
+            //fileData.data = new Uint8Array(reader.result);
+            fileData.data = ua;
+
+
+            Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
+              Session.set('S3url', url);
+              Session.set('uploading', false);
+
+              var imageHtml = "<img class=\"img-responsive\" src=\"" + url + "\">";
+
+              document.getElementById('postText').value = imageHtml;
+
+
+
+            });
           }
-          canvas.width = width;
-          canvas.height = height;
-          var ctx = canvas.getContext("2d");
-
-
-
-
-          
-
-// var exif = EXIF.readFromBinaryFile(new BinaryFile(e.target.result));
-// console.log("%O", exif);
-// switch(exif.Orientation){
-
-//     case 8:
-//            ctx.rotate(90*Math.PI/180);
-//            break;
-//        case 3:
-//            ctx.rotate(180*Math.PI/180);
-//            break;
-//        case 6:
-//            ctx.rotate(-90*Math.PI/180);
-//            break;
-
-//        case 8:
-//            ctx.rotate(90*Math.PI/180);
-//            break;
-//        case 3:
-//            ctx.rotate(180*Math.PI/180);
-//            break;
-//        case 6:
-//            ctx.rotate(-90*Math.PI/180);
-//            break;
-//     }
-          ctx.drawImage(img, 0, 0, width, height);
-
-          var dataUrl = canvas.toDataURL(fileData.type);
-          var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64')+7,dataUrl.length));
-          var length = binaryImg.length;
-          var ab = new ArrayBuffer(length);
-          var ua = new Uint8Array(ab);
-          for (var i = 0; i < length; i++){
-            ua[i] = binaryImg.charCodeAt(i);
-          }
-
-          //fileData.data = new Uint8Array(reader.result);
-          fileData.data = ua;
-
-
-          Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
-            Session.set('S3url', url);
-            Session.set('uploading', false);
-
-            var imageHtml = "<img class=\"img-responsive\" src=\"" + url + "\">";
-
-            document.getElementById('postText').value = imageHtml;
-
-
-
-          });
         };
 
         reader.readAsDataURL(file);

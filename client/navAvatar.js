@@ -59,83 +59,86 @@ Template.navAvatar.events({
         var img = new Image();
 
         reader.onload = function (e) {
-          //CANVAS
-          // var off = document.getElementById('offscreen');
-          // off.appendChild(img);
+          // CANVAS
+          var off = document.getElementById('offscreen');
+          off.appendChild(img);
 
 
           img.src = e.target.result;
 
 
-
-          // if (img.width) {
-          //   console.log(img.width);
-          // };
-
-          var canvas = document.createElement('canvas');
-
-          var MAX_WIDTH = 80;
-          var MAX_HEIGHT = 80;
-          var width = img.width;
-          var height = img.height;
+          img.onload = function () {
 
 
+            // if (img.width) {
+            console.log(img.naturalHeight);
+            // };
+
+            var canvas = document.createElement('canvas');
+
+            var MAX_WIDTH = 80;
+            var MAX_HEIGHT = 80;
+            var width = img.width;
+            var height = img.height;
 
 
 
 
-           
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
+
+
+             
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
             }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
+            canvas.width = width;
+            canvas.height = height;
+
+
+
+            var ctx = canvas.getContext("2d");     
+
+            ctx.drawImage(img, 0, 0, width, height);
+
+
+            var dataUrl = canvas.toDataURL(fileData.type);
+
+
+            var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64') + 7, dataUrl.length));
+            var length = binaryImg.length;
+
+
+            var ab = new ArrayBuffer(length);
+            var ua = new Uint8Array(ab);
+            for (var i = 0; i < length; i++){
+              ua[i] = binaryImg.charCodeAt(i);
             }
-          }
-          canvas.width = width;
-          canvas.height = height;
+
+            //fileData.data = new Uint8Array(reader.result);
+            fileData.data = ua;
 
 
+            Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
 
-          var ctx = canvas.getContext("2d");     
+              Session.set('uploading', false);
 
-          ctx.drawImage(img, 0, 0, width, height);
-
-
-          var dataUrl = canvas.toDataURL(fileData.type);
-
-
-          var binaryImg = atob(dataUrl.slice(dataUrl.indexOf('base64') + 7, dataUrl.length));
-          var length = binaryImg.length;
-
-
-          var ab = new ArrayBuffer(length);
-          var ua = new Uint8Array(ab);
-          for (var i = 0; i < length; i++){
-            ua[i] = binaryImg.charCodeAt(i);
-          }
-
-          //fileData.data = new Uint8Array(reader.result);
-          fileData.data = ua;
-
-
-          Meteor.call("S3upload", fileData, imageData, callback, function(err, url){
-
-            Session.set('uploading', false);
-
-            if (err) {console.log(err)}
-            else { 
-              ////add the image to the user account
-              Meteor.users.update(
-                { _id: Meteor.userId() }, 
-                { $set: { avatarUrl: url } }
-              );
-            }
-          });
+              if (err) {console.log(err)}
+              else { 
+                ////add the image to the user account
+                Meteor.users.update(
+                  { _id: Meteor.userId() }, 
+                  { $set: { avatarUrl: url } }
+                );
+              }
+            });
+          } 
         };
 
         reader.readAsDataURL(file);
