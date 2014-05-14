@@ -27,32 +27,38 @@ Template.read.events({
         commentator: "commentator",
         eventId: Session.get("currentEvent"),
         time: Date.now(),
+      };
+
+      doc["commentator"] = user.username; 
+
+      if (user !== null && user.avatarUrl ) { 
+        doc["avatarUrl"] = user.avatarUrl; 
       }
 
-      if ('facebook' in user.services) {
-        var facebookID = user.services.facebook.id;
-      }
+      // if ('facebook' in user.services) {
+      //   var facebookID = user.services.facebook.id;
+      // }
       
 
       //set user image
 
-      if (user !== null && ( user.avatarUrl || facebookID) ) { 
-        if (facebookID !== null && facebookID !== undefined ) {
-            doc["avatarUrl"] = "http://graph.facebook.com/" + facebookID + "/picture/?type=large"; 
-        } else  {
-            doc["avatarUrl"] = user.avatarUrl; 
-        } 
-      };
+      // if (user !== null && ( user.avatarUrl || facebookID) ) { 
+      //   if (facebookID !== null && facebookID !== undefined ) {
+      //       doc["avatarUrl"] = "http://graph.facebook.com/" + facebookID + "/picture/?type=large"; 
+      //   } else  {
+      //       doc["avatarUrl"] = user.avatarUrl; 
+      //   } 
+      // };
 
       //set username
 
-      if (user !== null && ( user.username || facebookID )) { 
-        if (facebookID !== null && facebookID !== undefined ) {
-          doc["commentator"] = user.services.facebook.first_name + " " + user.services.facebook.last_name;
-        } else {
-          doc["commentator"] = user.username; 
-        }
-      };
+      // if (user !== null && ( user.username || facebookID )) { 
+      //   if (facebookID !== null && facebookID !== undefined ) {
+      //     doc["commentator"] = user.services.facebook.first_name + " " + user.services.facebook.last_name;
+      //   } else {
+      //     doc["commentator"] = user.username; 
+      //   }
+      // };
 
 
 
@@ -79,34 +85,13 @@ Template.read.events({
         commentator: "commentator",
         eventId: Session.get("currentEvent"),
         time: Date.now(),
-      }
-      
-      if (user.services.facebook) {
-        var facebookID = user.services.facebook.id;
-      }
-
-      //set user image
-
-      if (user !== null && ( user.avatarUrl || facebookID) ) { 
-        if (facebookID !== null && facebookID !== undefined ) {
-            doc["avatarUrl"] = "http://graph.facebook.com/" + facebookID + "/picture/?type=large"; 
-        } else  {
-            doc["avatarUrl"] = user.avatarUrl; 
-        } 
       };
 
-      //set username
+      doc["commentator"] = user.username; 
 
-      if (user !== null && ( user.username || facebookID )) { 
-        if (facebookID !== null && facebookID !== undefined ) {
-          doc["commentator"] = user.services.facebook.first_name + " " + user.services.facebook.last_name;
-        } else {
-          doc["commentator"] = user.username; 
-        }
+      if (user !== null && user.avatarUrl ) { 
+        doc["avatarUrl"] = user.avatarUrl; 
       };
-
-
-
 
       Comments.insert(doc);
 
