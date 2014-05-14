@@ -47,6 +47,14 @@ body {
   background-color: #FFFBFF;
 }
 
+.comment-avatar {
+  padding: 5px;
+}
+
+.comment-meta {
+  margin: 0;
+}
+
 .posts-container {
   margin-top: 30px;
 }

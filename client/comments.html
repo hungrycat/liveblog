@@ -4,11 +4,19 @@
 
     <!-- loop over the comments -->
     {{ #each listComments}}
-      <div class="col-xs-10">
-        <p>{{ commentator }}:      {{ postTimeString }} ago</p>
-        <blockquote class="comment">
-          <p>{{ commentText }}</p>
-        </blockquote>
+      <div class="col-xs-12 comment-avatar">
+      	<p class="comment-meta">{{ commentator }}:      {{ postTimeString }} ago</p>
+      	<div class="col-xs-2 comment-avatar">
+      		{{ #if avatarUrl }}
+						<img class="img-responsive avatar-pic " height="80" width="80" src="{{avatarUrl}}">
+					{{ /if }}
+				</div>
+				<div class="col-xs-10 comment-avatar">
+	        
+	        <blockquote class="comment ">
+	          <p>{{ commentText }}</p>
+	        </blockquote>
+	      </div>
       </div>
     {{ /each }}
 </template>
