@@ -7,7 +7,8 @@
       "iron-router": {},
       "roles": {},
       "accounts-admin-ui-bootstrap-3": {},
-      "accounts-ui-bootstrap-3-blaze": {}
+      "accounts-ui-bootstrap-3-blaze": {},
+      "fast-render": {}
     },
     "packages": {
       "bootstrap-3": {
@@ -39,6 +40,11 @@
         "git": "https://github.com/rajit/meteor-accounts-ui-bootstrap-3.git",
         "tag": "v0.3.7",
         "commit": "a40b15f4b6213040accec10df97a7793e3a25225"
+      },
+      "fast-render": {
+        "git": "https://github.com/arunoda/meteor-fast-render.git",
+        "tag": "v0.2.5",
+        "commit": "93e2fb334e55fbe9b5ebb2a2e65964018658f43e"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
