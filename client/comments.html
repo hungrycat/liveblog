@@ -5,7 +5,8 @@
     <!-- loop over the comments -->
     {{ #each listComments}}
       <div class="col-xs-12 comment-avatar">
-      	<p class="comment-meta">{{ commentator }}:      {{ postTimeString }} ago</p>
+      	<p class="comment-meta">{{ commentator }}:      {{ postTimeString }} ago <button type="button" class="btn btn-xs btn-warning deleteComment">Delete</button></p>
+
       	<div class="col-xs-2 comment-avatar">
       		{{ #if avatarUrl }}
 						<img class="img-responsive avatar-pic " height="80" width="80" src="{{avatarUrl}}">

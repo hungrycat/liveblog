@@ -30,7 +30,7 @@
 
   // Configure environment
   "env": {
-    //"ROOT_URL": "162.243.4.196", 
+    "ROOT_URL": "http://readitlive.net", 
     "MONGO_URL": "mongodb://readitlive:rilonlymenotme2398@capital.0.mongolayer.com:10030,capital.1.mongolayer.com:10030/readitlive2",
     "MONGO_OPLOG_URL": "mongodb://readitlive:rilonlymenotme2398@capital.0.mongolayer.com:10030,capital.1.mongolayer.com:10030/local?authSource=readitlive2"
   },

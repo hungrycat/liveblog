@@ -91,19 +91,13 @@ Template.comments.events({
 
 
     Meteor.call("deleteComment", this._id);
+  }, 
+
+  'click .deleteComment' : function () {
+    Meteor.call("deleteComment", this._id);
+
   }
 
-
-
-  // 'dblclick .comment': function (evt, tmpl) { // start editing list name
-  //  Session.set('editing_comment_id', this._id);
-
-  //  Deps.flush(); // force DOM redraw, so we can focus the edit field
-
-  //  activateInput(tmpl.find("#editCommentText"));
-  //  $(".animated").autosize({append: "\n"});
-  //  $(".animated").trigger('autosize.resize');
-  // }
 });
 
 Template.comments.events(okCancelEvents(
