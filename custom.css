@@ -3,26 +3,36 @@ html          { overflow-y:scroll; }
 /*body          { padding-top:70px; }*/
 
 body {
-  background-color: #F7B5CB;
+  background-color: #E8ECED;
   font-family:  AvenirNext, Helvetica, sans-serif;
 
 }
 
 
 .navbar-default {
-    background-color: #35262D;
-    border-color: #E7E7E7;
+    /*background-color: #35262D; pink*/
+    background-color: #F7B5CB;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #999;
 }
 
 
 .navbar-default .navbar-brand {
-    color: #DDD;
+    font-family:  AvenirNext-Bold, Helvetica, sans-serif;
+    font-size: 22px;
+    color: #333;
 
 }
 
 .navbar-default .navbar-text{
+    font-family:  AvenirNext-DemiBold, Helvetica, sans-serif;
 
-    color: #DDD;
+    color: #333;
+}
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #333;
 }
 
 
@@ -94,6 +104,7 @@ textarea {
 .nava-ava {
   height: 50px;
   padding: 0px;
+  border-radius: 3px;
 }
 
 
@@ -137,8 +148,8 @@ textarea {
 
 
 .post-body {
-  border: 1px solid;
-  border-color: #E7E7E7;
+  border: 1px solid #CCC;
+  /*border-color: #E7E7E7; for pink background*/
   border-radius: 8px;
   background-color: #FFFBFF;
   padding-top: 12px;
@@ -227,14 +238,14 @@ textarea {
     font-family:  AvenirNext-DemiBold, Helvetica, sans-serif;
     font-size: 12px;
     margin-bottom: 0;
-    color: #666;
+    color: #444;
     padding: 0;
     padding-left: 5px;
 
   }
   .post-meta-time {
     font-size: 10px;
-    color: #888;
+    color: #666;
   }
 
   .post-body-text {
@@ -251,11 +262,6 @@ textarea {
 
 }
 
-
-#offscreen {
-    position: absolute;
-    left: -999em;
-}
 
 /*responsive embedded video*/
 
