@@ -150,7 +150,7 @@ textarea {
 .post-body {
   border: 1px solid #CCC;
   /*border-color: #E7E7E7; for pink background*/
-  border-radius: 8px;
+  border-radius: 5px;
   background-color: #FFFBFF;
   padding-top: 12px;
   padding-bottom: 12px; 
