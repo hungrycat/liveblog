@@ -5,7 +5,7 @@
 Template.eventsList.helpers({
   listEvents: function () {
     return Events.find({}, { sort: { time: -1 }});
-  }, 
+  },
   isLive: function () {
     return this.eventIsLive ? "Live" : "Ended";
   }
@@ -30,11 +30,16 @@ Template.eventsList.events = {
          document.getElementById('eventT').value = '';
           eventTitle.value = '';
         }
-  }, 
-  'click .deleteEvent' : function () {
-    Meteor.call("deleteEvent", this._id);
+  },
 
+  'click .deleteEvent' : function (e) {
+    e.preventDefault();
+
+    if (confirm('delete event?')) {
+      Meteor.call("deleteEvent", this._id);
     }
+
+  }
 };
 
 Template.adminTemplate.helpers({
