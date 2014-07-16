@@ -4,8 +4,26 @@
     {
       "host": "162.243.4.196",
       "username": "root",
-     // "password": "fmayuxuauhvq"
-      // or pem file (ssh based authentication)
+      "pem": "~/.ssh/id_rsa"
+    }, 
+    {
+      "host": "162.243.85.75",
+      "username": "root",
+      "pem": "~/.ssh/id_rsa"
+    }, 
+    {
+      "host": "107.170.111.226",
+      "username": "root",
+      "pem": "~/.ssh/id_rsa"
+    },
+    {
+      "host": "104.131.248.86",
+      "username": "root",
+      "pem": "~/.ssh/id_rsa"
+    },
+    {
+      "host": "107.170.10.37",
+      "username": "root",
       "pem": "~/.ssh/id_rsa"
     }
   ],

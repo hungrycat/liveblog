@@ -38,8 +38,8 @@
       },
       "accounts-ui-bootstrap-3-blaze": {
         "git": "https://github.com/rajit/meteor-accounts-ui-bootstrap-3.git",
-        "tag": "v0.3.8",
-        "commit": "2795a033465b26b9bcf203ac7768cc5c9dceedfe"
+        "tag": "v0.3.10",
+        "commit": "2cf78b49529e62060da086ca0e861fabcbc84928"
       },
       "fast-render": {
         "git": "https://github.com/arunoda/meteor-fast-render.git",
