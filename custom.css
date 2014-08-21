@@ -11,7 +11,9 @@ body {
 
 .navbar-default {
     /*background-color: #35262D; pink*/
-    background-color: rgb(250, 187, 0);
+    /*background-color: rgb(250, 187, 0);DeF yellow*/
+    background-color: #c41a18;
+
     border: 0;
     border-radius: 0;
     border-bottom: 1px solid #999;
@@ -21,7 +23,7 @@ body {
 .navbar-default .navbar-brand {
     font-family:  AvenirNext-Bold, Helvetica, sans-serif;
     font-size: 22px;
-    color: #444;
+    color: #222;
 
 }
 
@@ -46,12 +48,12 @@ body {
 
 
 
-.event-listing {  
-      border-left: 3px solid #eee;  
-      padding: 10px 10px;  
-      margin: 5px 0px; 
-      background: #FDFDFD; 
-  }  
+.event-listing {
+      border-left: 3px solid #eee;
+      padding: 10px 10px;
+      margin: 5px 0px;
+      background: #FDFDFD;
+  }
 
 #commentText {
   background-color: #FFFBFF;
@@ -153,7 +155,7 @@ textarea {
   border-radius: 5px;
   background-color: #FFFBFF;
   padding-top: 12px;
-  padding-bottom: 12px; 
+  padding-bottom: 12px;
 }
 
 
@@ -186,7 +188,7 @@ textarea {
 
 
 /* for the comments on the event live page */
-.comment { 
+.comment {
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #FFFBFF;
@@ -270,7 +272,7 @@ textarea {
     padding-bottom: 56.25%;
     padding-top: 30px; height: 0; overflow: hidden;
 }
- 
+
 .video-container iframe,
 .video-container object,
 .video-container embed {
