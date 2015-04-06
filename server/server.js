@@ -2,14 +2,14 @@ Meteor.methods({
 
 	deleteEvent: function(eventId) {
 		Events.remove(eventId);
-	}, 
+	},
 	deletePost: function(postId) {
 		Posts.remove(postId);
-	}, 
+	},
 	liveDead: function(eventId) {
 		var doc = Events.findOne({_id: eventId});
 		Events.update({_id: eventId}, {$set: {eventIsLive: !doc.eventIsLive}});
-	}, 
+	},
 	deleteComment: function(commentId) {
 		Comments.remove(commentId);
 	}
@@ -52,34 +52,34 @@ Meteor.users.allow({
 
 
 //allow posting comments by anyone, editing by admins
-Comments.allow({ 
+Comments.allow({
 	insert: function() { return true;},
-	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; } 
+	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }
 });
 
 
 
 
 //all CRUD allowed on events by admins
-Events.allow({ 
-	insert: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
-	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
-	remove: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; } 
+Events.allow({
+	insert: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; },
+	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; },
+	remove: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }
 });
 
 
 //all CRUD allowed on posts by admins
-Posts.allow({ 
-	insert: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
-	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
-	remove: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; } 
+Posts.allow({
+	insert: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; },
+	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; },
+	remove: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }
 });
 
 //for user online tracking
-Meteor.presences.allow({ 
-	insert: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
-	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }, 
-	remove: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; } 
+Meteor.presences.allow({
+	insert: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; },
+	update: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; },
+	remove: function() { if (Roles.userIsInRole(Meteor.userId(), ['admin'])) { return true; }  return false; }
 });
 
 
@@ -94,8 +94,8 @@ Meteor.startup(function () {
 /////S3 stuff
 
 
-var Knox = Meteor.require("knox");
-var Future = Meteor.require('fibers/future');
+var Knox = Meteor.npmRequire("knox");
+var Future = Meteor.npmRequire('fibers/future');
 
 var knox;
 var S3;
@@ -142,7 +142,7 @@ Meteor.methods({
 				Meteor.call(callback);
 			}
 		});
-	}, 
+	},
 	postImage: function  (url,imageData){
 	}
 });
@@ -153,5 +153,3 @@ Meteor.call("S3config", {
     bucket: 'liveblogphotos',
     region: "us-west-2"
 });
-
-

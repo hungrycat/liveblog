@@ -15,7 +15,7 @@ Meteor.startup(function() {
 
 Meteor.onConnection(function(connection) {
   // console.log('connectionId: ' + connection.id + ' userId: ' + this.userId);
-  Presences.upsert(connection.id, { $set: {}});
+  Presences.upsert(connection.id, { $set: {id: 1}});
   connections[connection.id] = {};
   tick(connection.id);
 
@@ -36,7 +36,7 @@ Meteor.methods({
         update.$set.userId = this.userId;
       else
         update.$unset = { userId: '' };
-      
+
       Presences.update(this.connection.id, update);
     }
   },

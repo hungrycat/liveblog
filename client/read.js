@@ -29,20 +29,12 @@ var postComment = function (event) {
     time: Date.now(),
   };
 
-  //username
-  if (user.services.facebook && user.services.facebook.id) {
+  //username & avatar url
+  if (user.services && user.services.facebook && user.services.facebook.id) {
     doc.avatarUrl = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=large";
-
-  } else {
-    doc.avatarUrl = user.avatarUrl;
-  }
-
-
-  //avatarurl
-
-  if (user.services.facebook && user.services.facebook.id) {
     doc.commentator = user.services.facebook.first_name + " " + user.services.facebook.last_name;
   } else {
+    doc.avatarUrl = user.avatarUrl;
     doc.commentator = user.username;
   }
 
@@ -60,7 +52,7 @@ Template.read.events({
 
   'click #submitComment' : function (event) {
     postComment(event);
-    
+
   },
 
   'click #submitCommentModal' : function (event) {
